@@ -2,211 +2,195 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <title>AI Voice Generator • Gemini TTS</title>
 
-    <title>AI Voice Generator</title>
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="app-container">
+<div class="app">
 
-    <!-- ================================================= -->
     <!-- HEADER -->
-    <!-- ================================================= -->
-
-    <header class="app-header">
-
+    <header class="header">
         <div>
-            <h1>AI Voice Generator</h1>
-
-            <p>
-                Gemini AI দিয়ে বাংলা Voice তৈরি করুন
-            </p>
+            <h1>🎙️ AI Voice Generator</h1>
+            <p>Gemini TTS • Personal Voice Studio</p>
         </div>
-
     </header>
 
 
-    <!-- ================================================= -->
     <!-- API KEYS -->
-    <!-- ================================================= -->
-
     <section class="card">
 
         <div class="section-title">
-
             <h2>🔑 Gemini API Keys</h2>
-
-            <span>
-                একাধিক Key ব্যবহার করুন
-            </span>
-
+            <span class="small-text">Personal Use</span>
         </div>
+
+        <p class="hint">
+            একাধিক API Key দিলে একটি Key-এর quota শেষ হলে পরের Key ব্যবহার করার চেষ্টা করবে।
+        </p>
 
         <div id="apiKeysContainer">
 
             <div class="api-key-row">
-
                 <input
                     type="password"
-                    class="api-key-input"
+                    class="api-key"
                     placeholder="Gemini API Key 1"
                     autocomplete="off"
                 >
 
                 <button
                     type="button"
-                    class="show-key-btn"
-                    onclick="toggleApiKey(this)"
+                    class="show-key"
+                    onclick="toggleKey(this)"
                 >
-                    Show
+                    👁
                 </button>
-
             </div>
 
-
             <div class="api-key-row">
-
                 <input
                     type="password"
-                    class="api-key-input"
+                    class="api-key"
                     placeholder="Gemini API Key 2"
                     autocomplete="off"
                 >
 
                 <button
                     type="button"
-                    class="show-key-btn"
-                    onclick="toggleApiKey(this)"
+                    class="show-key"
+                    onclick="toggleKey(this)"
                 >
-                    Show
+                    👁
                 </button>
-
             </div>
 
-
             <div class="api-key-row">
-
                 <input
                     type="password"
-                    class="api-key-input"
+                    class="api-key"
                     placeholder="Gemini API Key 3"
                     autocomplete="off"
                 >
 
                 <button
                     type="button"
-                    class="show-key-btn"
-                    onclick="toggleApiKey(this)"
+                    class="show-key"
+                    onclick="toggleKey(this)"
                 >
-                    Show
+                    👁
                 </button>
-
             </div>
 
         </div>
-
 
         <button
             type="button"
             class="secondary-btn"
             onclick="addApiKey()"
         >
-            + Add API Key
+            + Add Another API Key
         </button>
 
     </section>
 
 
-    <!-- ================================================= -->
-    <!-- VOICE SETTINGS -->
-    <!-- ================================================= -->
-
+    <!-- MODEL & VOICE -->
     <section class="card">
 
         <div class="section-title">
+            <h2>🎛️ Voice Settings</h2>
+        </div>
 
-            <h2>🎙️ Voice Settings</h2>
+        <div class="grid">
 
-            <span id="modelStatus">
-                Loading...
-            </span>
+            <div class="field">
+                <label for="modelSelect">
+                    Gemini TTS Model
+                </label>
+
+                <select id="modelSelect">
+
+                    <option value="gemini-2.5-flash-preview-tts">
+                        Gemini 2.5 Flash TTS
+                    </option>
+
+                    <option value="gemini-2.5-pro-preview-tts">
+                        Gemini 2.5 Pro TTS
+                    </option>
+
+                </select>
+            </div>
+
+
+            <div class="field">
+                <label for="voiceSelect">
+                    Voice
+                </label>
+
+                <select id="voiceSelect">
+
+                    <option value="Zephyr">Zephyr</option>
+                    <option value="Puck">Puck</option>
+                    <option value="Charon">Charon</option>
+                    <option value="Kore">Kore</option>
+                    <option value="Fenrir">Fenrir</option>
+                    <option value="Leda">Leda</option>
+                    <option value="Orus">Orus</option>
+                    <option value="Aoede">Aoede</option>
+                    <option value="Callirrhoe">Callirrhoe</option>
+                    <option value="Autonoe">Autonoe</option>
+                    <option value="Enceladus">Enceladus</option>
+                    <option value="Iapetus">Iapetus</option>
+                    <option value="Umbriel">Umbriel</option>
+                    <option value="Algieba">Algieba</option>
+                    <option value="Despina">Despina</option>
+                    <option value="Erinome">Erinome</option>
+                    <option value="Algenib">Algenib</option>
+                    <option value="Rasalgethi">Rasalgethi</option>
+                    <option value="Laomedeia">Laomedeia</option>
+                    <option value="Achernar">Achernar</option>
+                    <option value="Alnilam">Alnilam</option>
+                    <option value="Schedar">Schedar</option>
+                    <option value="Gacrux">Gacrux</option>
+                    <option value="Pulcherrima">Pulcherrima</option>
+                    <option value="Achird">Achird</option>
+                    <option value="Zubenelgenubi">Zubenelgenubi</option>
+                    <option value="Vindemiatrix">Vindemiatrix</option>
+                    <option value="Sadachbia">Sadachbia</option>
+                    <option value="Sadaltager">Sadaltager</option>
+                    <option value="Sulafat">Sulafat</option>
+
+                </select>
+            </div>
 
         </div>
 
 
-        <!-- MODEL -->
+        <div class="field temperature-field">
 
-        <div class="setting-group">
-
-            <label for="modelSelect">
-                Gemini TTS Model
-            </label>
-
-            <select id="modelSelect">
-
-                <option value="">
-                    Loading models...
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <!-- VOICE -->
-
-        <div class="setting-group">
-
-            <label for="voiceModel">
-                Voice
-            </label>
-
-            <select id="voiceModel">
-
-                <option value="">
-                    Loading voices...
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <!-- TEMPERATURE -->
-
-        <div class="setting-group">
-
-            <div class="range-header">
-
+            <div class="label-line">
                 <label for="temperature">
                     Temperature
                 </label>
 
                 <span id="temperatureValue">
-                    0.7
+                    1.0
                 </span>
-
             </div>
-
 
             <input
                 type="range"
                 id="temperature"
                 min="0"
-                max="1"
+                max="2"
                 step="0.1"
-                value="0.7"
+                value="1"
             >
 
         </div>
@@ -214,43 +198,34 @@
     </section>
 
 
-    <!-- ================================================= -->
-    <!-- TEXT INPUT -->
-    <!-- ================================================= -->
-
+    <!-- TEXT -->
     <section class="card">
 
         <div class="section-title">
 
             <h2>📝 Text</h2>
 
-            <span id="charCount">
+            <span id="characterCount">
                 0 characters
             </span>
 
         </div>
 
-
         <textarea
             id="textInput"
-            placeholder="এখানে আপনার বাংলা স্ক্রিপ্ট লিখুন বা Paste করুন..."
+            placeholder="এখানে তোমার বাংলা স্ক্রিপ্ট লিখুন বা paste করুন..."
+            spellcheck="false"
         ></textarea>
 
 
         <div class="text-info">
 
-            <span>
-                আনুমানিক সময়:
-                <strong id="estimatedDuration">
-                    0 মিনিট
-                </strong>
+            <span id="wordCount">
+                0 words
             </span>
 
-            <span>
-                আনুমানিক Parts:
-                <strong id="estimatedParts">
-                    0
-                </strong>
+            <span id="estimatedTime">
+                আনুমানিক সময়: 0 মিনিট
             </span>
 
         </div>
@@ -258,11 +233,8 @@
     </section>
 
 
-    <!-- ================================================= -->
     <!-- GENERATE -->
-    <!-- ================================================= -->
-
-    <section class="generate-section">
+    <section class="action-section">
 
         <button
             type="button"
@@ -276,150 +248,117 @@
     </section>
 
 
-    <!-- ================================================= -->
     <!-- PROGRESS -->
-    <!-- ================================================= -->
-
     <section
-        class="card hidden"
         id="progressSection"
+        class="card progress-card hidden"
     >
 
         <div class="section-title">
 
-            <h2>⚡ Generation Progress</h2>
+            <h2>⚙️ Generating...</h2>
 
             <span id="progressText">
-                Preparing...
+                0%
             </span>
 
         </div>
 
-
-        <div class="progress-container">
+        <div class="progress-bar">
 
             <div
-                class="progress-bar"
-                id="progressBar"
+                id="progressFill"
+                class="progress-fill"
             ></div>
 
         </div>
 
-
-        <div class="progress-info">
-
-            <span id="currentPart">
-                Part 0 / 0
-            </span>
-
-            <span id="currentApiKey">
-                API Key -
-            </span>
-
-        </div>
+        <p id="progressMessage">
+            Preparing...
+        </p>
 
     </section>
 
 
-    <!-- ================================================= -->
-    <!-- GENERATED VOICES -->
-    <!-- ================================================= -->
-
+    <!-- ERROR -->
     <section
+        id="errorBox"
+        class="error-box hidden"
+    ></section>
+
+
+    <!-- GENERATED AUDIO -->
+    <section
+        id="resultsSection"
         class="card hidden"
-        id="voicesSection"
     >
 
         <div class="section-title">
 
-            <h2>🎧 Generated Voices</h2>
+            <div>
+                <h2>🎧 Generated Voices</h2>
 
-            <span id="generatedCount">
-                0 Parts
-            </span>
+                <p id="resultSummary" class="hint"></p>
+            </div>
 
         </div>
 
 
-        <div id="voicesContainer"></div>
+        <div id="audioList"></div>
 
 
         <!-- MERGE -->
-
         <div class="merge-section">
 
             <button
                 type="button"
                 id="mergeBtn"
-                class="secondary-btn"
-                onclick="mergeVoices()"
+                class="merge-btn"
+                onclick="mergeAllVoices()"
             >
                 🔗 Merge All Voices
             </button>
 
         </div>
 
-    </section>
 
+        <!-- MERGED RESULT -->
+        <div
+            id="mergedResult"
+            class="merged-result hidden"
+        >
 
-    <!-- ================================================= -->
-    <!-- MERGED AUDIO -->
-    <!-- ================================================= -->
+            <h3>🎵 Complete Audio</h3>
 
-    <section
-        class="card hidden"
-        id="mergedSection"
-    >
+            <audio
+                id="mergedAudio"
+                controls
+                preload="none"
+            ></audio>
 
-        <div class="section-title">
-
-            <h2>🎵 Complete Voice</h2>
+            <a
+                id="mergedDownload"
+                class="download-btn"
+                download="complete-voice.wav"
+            >
+                ⬇️ Download Complete Audio
+            </a>
 
         </div>
 
-
-        <audio
-            id="mergedAudio"
-            controls
-            preload="metadata"
-        ></audio>
-
-
-        <a
-            id="mergedDownload"
-            class="download-btn"
-            href="#"
-            download="merged-voice.wav"
-        >
-            ⬇ Download Complete Voice
-        </a>
-
     </section>
 
 
-    <!-- ================================================= -->
-    <!-- ERROR -->
-    <!-- ================================================= -->
-
-    <section
-        class="error-box hidden"
-        id="errorBox"
-    >
-
-        <strong>❌ Error</strong>
-
-        <p id="errorText"></p>
-
-    </section>
-
-
-    <!-- ================================================= -->
     <!-- FOOTER -->
-    <!-- ================================================= -->
-
     <footer>
 
-        AI Voice Generator • Gemini TTS
+        <p>
+            Personal Gemini TTS Studio
+        </p>
+
+        <p class="footer-note">
+            API keys are entered locally in this browser session.
+        </p>
 
     </footer>
 
@@ -428,321 +367,102 @@
 
 <script>
 
-"use strict";
+/* =========================================================
+   GEMINI CONFIGURATION
+   ========================================================= */
+
+const GEMINI_API_BASE =
+    "https://generativelanguage.googleapis.com/v1beta";
 
 
-// =========================================================
-// BACKEND URL
-// =========================================================
-//
-// যদি frontend এবং Flask একই server-এ চলে,
-// তাহলে "" রাখুন.
-//
-// GitHub Pages + আলাদা Python server হলে:
-//
-// const API_BASE_URL = "https://YOUR-BACKEND-URL.com";
-//
-// =========================================================
+/* =========================================================
+   VOICE LIST
+   ========================================================= */
 
-const API_BASE_URL = "";
-
-
-// =========================================================
-// GLOBAL
-// =========================================================
-
-let currentJobId = null;
-
-
-// =========================================================
-// PAGE LOAD
-// =========================================================
-
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-
-        loadModelsAndVoices();
-
-        updateTextInfo();
-
-        document
-            .getElementById("temperature")
-            .addEventListener(
-                "input",
-                updateTemperature
-            );
-
-        document
-            .getElementById("textInput")
-            .addEventListener(
-                "input",
-                updateTextInfo
-            );
-    }
-);
+const VOICES = [
+    "Zephyr",
+    "Puck",
+    "Charon",
+    "Kore",
+    "Fenrir",
+    "Leda",
+    "Orus",
+    "Aoede",
+    "Callirrhoe",
+    "Autonoe",
+    "Enceladus",
+    "Iapetus",
+    "Umbriel",
+    "Algieba",
+    "Despina",
+    "Erinome",
+    "Algenib",
+    "Rasalgethi",
+    "Laomedeia",
+    "Achernar",
+    "Alnilam",
+    "Schedar",
+    "Gacrux",
+    "Pulcherrima",
+    "Achird",
+    "Zubenelgenubi",
+    "Vindemiatrix",
+    "Sadachbia",
+    "Sadaltager",
+    "Sulafat"
+];
 
 
-// =========================================================
-// LOAD MODELS + VOICES
-// =========================================================
+/* =========================================================
+   GLOBAL STATE
+   ========================================================= */
 
-async function loadModelsAndVoices() {
+let generatedParts = [];
 
-    const modelSelect =
-        document.getElementById(
-            "modelSelect"
-        );
-
-    const voiceSelect =
-        document.getElementById(
-            "voiceModel"
-        );
-
-    const status =
-        document.getElementById(
-            "modelStatus"
-        );
+let currentTemperature = 1.0;
 
 
-    modelSelect.innerHTML = `
-        <option value="">
-            Loading models...
-        </option>
-    `;
+/* =========================================================
+   API KEY
+   ========================================================= */
 
-    voiceSelect.innerHTML = `
-        <option value="">
-            Loading voices...
-        </option>
-    `;
+function getApiKeys() {
 
-    status.textContent =
-        "Connecting...";
+    const inputs =
+        document.querySelectorAll(".api-key");
 
+    const keys = [];
 
-    try {
+    inputs.forEach(input => {
 
-        const response = await fetch(
-            `${API_BASE_URL}/api/models`
-        );
+        const key =
+            input.value.trim();
 
-
-        if (!response.ok) {
-
-            throw new Error(
-                `Server returned ${response.status}`
-            );
+        if (key) {
+            keys.push(key);
         }
 
+    });
 
-        const data =
-            await response.json();
-
-
-        console.log(
-            "Gemini API response:",
-            data
-        );
-
-
-        // =================================================
-        // MODELS
-        // =================================================
-
-        modelSelect.innerHTML = "";
-
-
-        if (
-            Array.isArray(data.models) &&
-            data.models.length > 0
-        ) {
-
-            data.models.forEach(
-                model => {
-
-                    const option =
-                        document.createElement(
-                            "option"
-                        );
-
-
-                    option.value =
-                        model.id;
-
-
-                    option.textContent =
-                        model.name ||
-                        model.id;
-
-
-                    modelSelect.appendChild(
-                        option
-                    );
-                }
-            );
-
-        } else {
-
-            modelSelect.innerHTML = `
-                <option value="">
-                    No models found
-                </option>
-            `;
-        }
-
-
-        // =================================================
-        // VOICES
-        // =================================================
-
-        voiceSelect.innerHTML = "";
-
-
-        if (
-            Array.isArray(data.voices) &&
-            data.voices.length > 0
-        ) {
-
-            data.voices.forEach(
-                voice => {
-
-                    const option =
-                        document.createElement(
-                            "option"
-                        );
-
-
-                    // Backend যদি শুধু string পাঠায়
-                    if (
-                        typeof voice ===
-                        "string"
-                    ) {
-
-                        option.value =
-                            voice;
-
-                        option.textContent =
-                            voice;
-                    }
-
-
-                    // Backend যদি object পাঠায়
-                    else {
-
-                        option.value =
-                            voice.id;
-
-                        option.textContent =
-                            voice.name ||
-                            voice.id;
-                    }
-
-
-                    voiceSelect.appendChild(
-                        option
-                    );
-                }
-            );
-
-
-            // Default voice
-            if (
-                data.voices.includes &&
-                data.voices.includes("Kore")
-            ) {
-
-                voiceSelect.value =
-                    "Kore";
-            }
-
-        } else {
-
-            voiceSelect.innerHTML = `
-                <option value="">
-                    No voices found
-                </option>
-            `;
-        }
-
-
-        // =================================================
-        // STATUS
-        // =================================================
-
-        status.textContent =
-            `${data.voices?.length || 0} voices loaded`;
-
-
-        console.log(
-            "Models:",
-            data.models
-        );
-
-        console.log(
-            "Voices:",
-            data.voices
-        );
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Model/Voice loading error:",
-            error
-        );
-
-
-        modelSelect.innerHTML = `
-            <option value="">
-                Failed to load models
-            </option>
-        `;
-
-
-        voiceSelect.innerHTML = `
-            <option value="">
-                Failed to load voices
-            </option>
-        `;
-
-
-        status.textContent =
-            "Backend connection failed";
-
-
-        showError(
-            "Backend server-এর সাথে connection হচ্ছে না। " +
-            "Python app.py চালু আছে কিনা এবং API_BASE_URL ঠিক আছে কিনা দেখুন।"
-        );
-    }
+    return keys;
 }
 
 
-// =========================================================
-// API KEY
-// =========================================================
+/* =========================================================
+   ADD API KEY
+   ========================================================= */
 
 function addApiKey() {
 
     const container =
-        document.getElementById(
-            "apiKeysContainer"
-        );
+        document.getElementById("apiKeysContainer");
 
-
-    const count =
-        container.querySelectorAll(
-            ".api-key-input"
-        ).length + 1;
+    const number =
+        container.querySelectorAll(".api-key-row").length + 1;
 
 
     const row =
-        document.createElement(
-            "div"
-        );
-
+        document.createElement("div");
 
     row.className =
         "api-key-row";
@@ -752,207 +472,725 @@ function addApiKey() {
 
         <input
             type="password"
-            class="api-key-input"
-            placeholder="Gemini API Key ${count}"
+            class="api-key"
+            placeholder="Gemini API Key ${number}"
             autocomplete="off"
         >
 
         <button
             type="button"
-            class="show-key-btn"
-            onclick="toggleApiKey(this)"
+            class="show-key"
+            onclick="toggleKey(this)"
         >
-            Show
+            👁
+        </button>
+
+        <button
+            type="button"
+            class="remove-key"
+            onclick="removeApiKey(this)"
+        >
+            ×
         </button>
 
     `;
 
 
-    container.appendChild(
-        row
-    );
+    container.appendChild(row);
+
 }
 
 
-// =========================================================
-// SHOW / HIDE API KEY
-// =========================================================
+/* =========================================================
+   REMOVE API KEY
+   ========================================================= */
 
-function toggleApiKey(button) {
+function removeApiKey(button) {
+
+    const row =
+        button.closest(".api-key-row");
+
+    if (row) {
+        row.remove();
+    }
+
+}
+
+
+/* =========================================================
+   SHOW / HIDE API KEY
+   ========================================================= */
+
+function toggleKey(button) {
+
+    const row =
+        button.closest(".api-key-row");
 
     const input =
-        button.parentElement.querySelector(
-            ".api-key-input"
-        );
+        row.querySelector(".api-key");
 
 
-    if (
-        input.type ===
-        "password"
-    ) {
+    if (input.type === "password") {
 
-        input.type =
-            "text";
+        input.type = "text";
 
-        button.textContent =
-            "Hide";
+        button.textContent = "🙈";
 
     } else {
 
-        input.type =
-            "password";
+        input.type = "password";
 
-        button.textContent =
-            "Show";
+        button.textContent = "👁";
+
     }
+
 }
 
 
-// =========================================================
-// TEMPERATURE
-// =========================================================
+/* =========================================================
+   TEMPERATURE
+   ========================================================= */
 
-function updateTemperature() {
+const temperature =
+    document.getElementById("temperature");
 
-    const value =
-        document.getElementById(
-            "temperature"
-        ).value;
-
-
-    document.getElementById(
-        "temperatureValue"
-    ).textContent =
-        value;
-}
+const temperatureValue =
+    document.getElementById("temperatureValue");
 
 
-// =========================================================
-// TEXT INFO
-// =========================================================
+temperature.addEventListener("input", () => {
+
+    currentTemperature =
+        Number(temperature.value);
+
+    temperatureValue.textContent =
+        currentTemperature.toFixed(1);
+
+});
+
+
+/* =========================================================
+   TEXT COUNTER
+   ========================================================= */
+
+const textInput =
+    document.getElementById("textInput");
+
+
+textInput.addEventListener("input", updateTextInfo);
+
 
 function updateTextInfo() {
 
     const text =
-        document.getElementById(
-            "textInput"
-        ).value;
+        textInput.value.trim();
 
 
     const characters =
         text.length;
 
 
-    document.getElementById(
-        "charCount"
-    ).textContent =
+    const words =
+        text
+            ? text.split(/\s+/).length
+            : 0;
+
+
+    document.getElementById("characterCount")
+        .textContent =
         `${characters.toLocaleString()} characters`;
 
 
-    // Approximate Bengali narration:
-    // around 120-130 words/minute
+    document.getElementById("wordCount")
+        .textContent =
+        `${words.toLocaleString()} words`;
 
-    const words =
-        text
-            .trim()
-            .split(/\s+/)
-            .filter(Boolean)
-            .length;
 
+    /*
+       Approximate Bengali narration speed.
+       Around 130 words/minute.
+    */
 
     const minutes =
-        words > 0
-            ? words / 125
-            : 0;
+        words / 130;
 
 
-    document.getElementById(
-        "estimatedDuration"
-    ).textContent =
-        formatMinutes(
-            minutes
-        );
+    let timeText;
+
+    if (minutes < 1) {
+
+        timeText =
+            "আনুমানিক সময়: < 1 মিনিট";
+
+    } else {
+
+        timeText =
+            `আনুমানিক সময়: ${minutes.toFixed(1)} মিনিট`;
+
+    }
 
 
-    const parts =
-        words > 0
-            ? Math.ceil(
-                minutes / 2.5
-            )
-            : 0;
+    document.getElementById("estimatedTime")
+        .textContent =
+        timeText;
 
-
-    document.getElementById(
-        "estimatedParts"
-    ).textContent =
-        parts;
 }
 
 
-// =========================================================
-// FORMAT TIME
-// =========================================================
+/* =========================================================
+   TEXT CHUNKING
+   =========================================================
 
-function formatMinutes(
-    minutes
+   Target approximately 2.5 minutes.
+
+   Average Bengali narration:
+   ~130 words/minute
+
+   2.5 minutes:
+   ~325 words
+
+   We try to split at:
+   paragraph
+   sentence
+   newline
+
+   rather than cutting sentences.
+*/
+
+function splitTextIntoChunks(text) {
+
+    text =
+        text
+            .replace(/\r\n/g, "\n")
+            .replace(/\r/g, "\n")
+            .trim();
+
+
+    if (!text) {
+        return [];
+    }
+
+
+    const targetWords = 325;
+
+    const maxWords = 380;
+
+
+    const paragraphs =
+        text
+            .split(/\n\s*\n/)
+            .map(x => x.trim())
+            .filter(Boolean);
+
+
+    const chunks = [];
+
+    let current = [];
+    let currentWords = 0;
+
+
+    function addCurrent() {
+
+        if (!current.length) {
+            return;
+        }
+
+        chunks.push(
+            current.join("\n\n").trim()
+        );
+
+        current = [];
+        currentWords = 0;
+
+    }
+
+
+    for (const paragraph of paragraphs) {
+
+        const paragraphWords =
+            paragraph
+                .split(/\s+/)
+                .filter(Boolean);
+
+
+        /*
+           Very large paragraph:
+           split into sentences.
+        */
+
+        if (paragraphWords.length > maxWords) {
+
+            const sentences =
+                paragraph.match(
+                    /[^.!?।！？]+[.!?।！？]+|[^.!?।！？]+$/g
+                ) || [paragraph];
+
+
+            for (const sentence of sentences) {
+
+                const clean =
+                    sentence.trim();
+
+                if (!clean) continue;
+
+
+                const count =
+                    clean
+                        .split(/\s+/)
+                        .filter(Boolean)
+                        .length;
+
+
+                if (
+                    currentWords > 0 &&
+                    currentWords + count > maxWords
+                ) {
+
+                    addCurrent();
+
+                }
+
+
+                current.push(clean);
+
+                currentWords += count;
+
+
+                if (currentWords >= targetWords) {
+
+                    addCurrent();
+
+                }
+
+            }
+
+        } else {
+
+            if (
+                currentWords > 0 &&
+                currentWords + paragraphWords.length > maxWords
+            ) {
+
+                addCurrent();
+
+            }
+
+
+            current.push(paragraph);
+
+            currentWords +=
+                paragraphWords.length;
+
+
+            if (currentWords >= targetWords) {
+
+                addCurrent();
+
+            }
+
+        }
+
+    }
+
+
+    addCurrent();
+
+
+    /*
+       If final chunk is extremely small,
+       attach it to previous chunk.
+    */
+
+    if (chunks.length > 1) {
+
+        const last =
+            chunks[chunks.length - 1];
+
+        const lastWords =
+            last
+                .split(/\s+/)
+                .filter(Boolean)
+                .length;
+
+
+        if (lastWords < 80) {
+
+            chunks[chunks.length - 2] +=
+                "\n\n" + last;
+
+            chunks.pop();
+
+        }
+
+    }
+
+
+    return chunks;
+
+}
+
+
+/* =========================================================
+   GEMINI TTS REQUEST
+   ========================================================= */
+
+async function generateGeminiAudio(
+    apiKey,
+    model,
+    voice,
+    text
 ) {
 
-    if (
-        !minutes ||
-        minutes <= 0
-    ) {
+    const url =
+        `${GEMINI_API_BASE}/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
 
-        return "0 মিনিট";
+
+    /*
+       Temperature is translated into speaking-style
+       guidance because Gemini TTS does not use the
+       normal text-generation temperature parameter
+       in the same way.
+    */
+
+    let style = "";
+
+    if (currentTemperature < 0.7) {
+
+        style =
+            "Speak calmly, naturally and steadily. ";
+
+    } else if (currentTemperature < 1.3) {
+
+        style =
+            "Speak naturally with expressive but controlled emotion. ";
+
+    } else {
+
+        style =
+            "Speak with expressive, energetic and emotionally varied delivery. ";
+
     }
 
 
-    const totalSeconds =
-        Math.round(
-            minutes * 60
-        );
+    const prompt =
+        `${style}` +
+        `Read the following Bengali text naturally and clearly. ` +
+        `Preserve the exact meaning and wording. ` +
+        `Do not translate it. Do not add explanations. ` +
+        `Use natural Bengali pronunciation, pauses and emotional delivery.\n\n` +
+        text;
 
 
-    const mins =
-        Math.floor(
-            totalSeconds / 60
-        );
+    const body = {
+
+        contents: [
+            {
+                parts: [
+                    {
+                        text: prompt
+                    }
+                ]
+            }
+        ],
+
+        generationConfig: {
+
+            responseModalities: [
+                "AUDIO"
+            ],
+
+            speechConfig: {
+
+                languageCode: "bn-IN",
+
+                voiceConfig: {
+
+                    prebuiltVoiceConfig: {
+
+                        voiceName: voice
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    };
 
 
-    const seconds =
-        totalSeconds % 60;
+    const response =
+        await fetch(url, {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type":
+                    "application/json"
+
+            },
+
+            body:
+                JSON.stringify(body)
+
+        });
 
 
-    if (
-        seconds === 0
-    ) {
+    const data =
+        await response.json();
 
-        return `${mins} মিনিট`;
+
+    if (!response.ok) {
+
+        const message =
+            data?.error?.message ||
+            `Gemini API Error (${response.status})`;
+
+        throw new Error(message);
+
     }
 
 
-    return `${mins} মিনিট ${seconds} সেকেন্ড`;
+    const inlineData =
+        data
+            ?.candidates?.[0]
+            ?.content?.parts?.find(
+                part => part.inlineData
+            )
+            ?.inlineData;
+
+
+    if (!inlineData) {
+
+        throw new Error(
+            "Gemini থেকে audio data পাওয়া যায়নি।"
+        );
+
+    }
+
+
+    const mimeType =
+        inlineData.mimeType ||
+        "audio/pcm;rate=24000";
+
+
+    const base64 =
+        inlineData.data;
+
+
+    return {
+
+        base64,
+        mimeType
+
+    };
+
 }
 
 
-// =========================================================
-// GENERATE VOICES
-// =========================================================
+/* =========================================================
+   BASE64 → BYTE ARRAY
+   ========================================================= */
+
+function base64ToUint8Array(base64) {
+
+    const binary =
+        atob(base64);
+
+    const bytes =
+        new Uint8Array(
+            binary.length
+        );
+
+
+    for (
+        let i = 0;
+        i < binary.length;
+        i++
+    ) {
+
+        bytes[i] =
+            binary.charCodeAt(i);
+
+    }
+
+
+    return bytes;
+
+}
+
+
+/* =========================================================
+   PCM → WAV
+   ========================================================= */
+
+function pcmToWav(
+    pcmBytes,
+    sampleRate = 24000,
+    channels = 1,
+    bitsPerSample = 16
+) {
+
+    const byteRate =
+        sampleRate *
+        channels *
+        bitsPerSample / 8;
+
+
+    const blockAlign =
+        channels *
+        bitsPerSample / 8;
+
+
+    const buffer =
+        new ArrayBuffer(
+            44 + pcmBytes.length
+        );
+
+
+    const view =
+        new DataView(buffer);
+
+
+    function writeString(
+        offset,
+        string
+    ) {
+
+        for (
+            let i = 0;
+            i < string.length;
+            i++
+        ) {
+
+            view.setUint8(
+                offset + i,
+                string.charCodeAt(i)
+            );
+
+        }
+
+    }
+
+
+    writeString(0, "RIFF");
+
+    view.setUint32(
+        4,
+        36 + pcmBytes.length,
+        true
+    );
+
+    writeString(8, "WAVE");
+
+    writeString(12, "fmt ");
+
+    view.setUint32(
+        16,
+        16,
+        true
+    );
+
+    view.setUint16(
+        20,
+        1,
+        true
+    );
+
+    view.setUint16(
+        22,
+        channels,
+        true
+    );
+
+    view.setUint32(
+        24,
+        sampleRate,
+        true
+    );
+
+    view.setUint32(
+        28,
+        byteRate,
+        true
+    );
+
+    view.setUint16(
+        32,
+        blockAlign,
+        true
+    );
+
+    view.setUint16(
+        34,
+        bitsPerSample,
+        true
+    );
+
+    writeString(36, "data");
+
+    view.setUint32(
+        40,
+        pcmBytes.length,
+        true
+    );
+
+
+    new Uint8Array(
+        buffer,
+        44
+    ).set(pcmBytes);
+
+
+    return new Blob(
+        [buffer],
+        {
+            type: "audio/wav"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   GENERATE ALL VOICES
+   ========================================================= */
 
 async function generateVoices() {
 
-    hideError();
+    clearError();
 
 
-    const generateBtn =
-        document.getElementById(
-            "generateBtn"
+    const keys =
+        getApiKeys();
+
+
+    if (!keys.length) {
+
+        showError(
+            "কমপক্ষে একটি Gemini API Key দিন।"
         );
+
+        return;
+
+    }
 
 
     const text =
-        document.getElementById(
-            "textInput"
-        ).value.trim();
+        textInput.value.trim();
+
+
+    if (!text) {
+
+        showError(
+            "অনুগ্রহ করে কিছু বাংলা text দিন।"
+        );
+
+        return;
+
+    }
 
 
     const model =
@@ -963,415 +1201,325 @@ async function generateVoices() {
 
     const voice =
         document.getElementById(
-            "voiceModel"
+            "voiceSelect"
         ).value;
 
 
-    const temperature =
-        parseFloat(
-            document.getElementById(
-                "temperature"
-            ).value
-        );
+    const chunks =
+        splitTextIntoChunks(text);
 
 
-    // =====================================================
-    // API KEYS
-    // =====================================================
-
-    const keyInputs =
-        document.querySelectorAll(
-            ".api-key-input"
-        );
-
-
-    const apiKeys =
-        Array.from(
-            keyInputs
-        )
-        .map(
-            input =>
-                input.value.trim()
-        )
-        .filter(
-            key => key.length > 0
-        );
-
-
-    // =====================================================
-    // VALIDATION
-    // =====================================================
-
-    if (
-        apiKeys.length === 0
-    ) {
+    if (!chunks.length) {
 
         showError(
-            "কমপক্ষে একটি Gemini API Key দিন।"
+            "Text থেকে কোনো অংশ তৈরি করা যায়নি।"
         );
 
         return;
+
     }
 
 
-    if (!model) {
+    generatedParts = [];
 
-        showError(
-            "একটি Gemini TTS Model নির্বাচন করুন।"
+
+    const generateBtn =
+        document.getElementById(
+            "generateBtn"
         );
 
-        return;
-    }
 
-
-    if (!voice) {
-
-        showError(
-            "একটি Voice নির্বাচন করুন।"
-        );
-
-        return;
-    }
-
-
-    if (!text) {
-
-        showError(
-            "Text box-এ আপনার script দিন।"
-        );
-
-        return;
-    }
-
-
-    // =====================================================
-    // UI
-    // =====================================================
-
-    generateBtn.disabled =
-        true;
-
+    generateBtn.disabled = true;
 
     generateBtn.textContent =
         "⏳ Generating...";
 
 
-    document
-        .getElementById(
-            "progressSection"
-        )
-        .classList.remove(
-            "hidden"
-        );
-
-
-    document
-        .getElementById(
-            "voicesSection"
-        )
-        .classList.add(
-            "hidden"
-        );
-
-
-    document
-        .getElementById(
-            "mergedSection"
-        )
-        .classList.add(
-            "hidden"
-        );
-
-
-    setProgress(
-        0,
-        0,
-        0
-    );
+    showProgress();
 
 
     try {
 
-        // =================================================
-        // REQUEST
-        // =================================================
-
-        const response =
-            await fetch(
-                `${API_BASE_URL}/api/generate`,
-                {
-
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body: JSON.stringify({
-
-                        api_keys:
-                            apiKeys,
-
-                        text:
-                            text,
-
-                        model:
-                            model,
-
-                        voice:
-                            voice,
-
-                        temperature:
-                            temperature
-                    })
-                }
-            );
-
-
-        const data =
-            await response.json();
-
-
-        if (
-            !response.ok ||
-            !data.success
+        for (
+            let i = 0;
+            i < chunks.length;
+            i++
         ) {
 
-            throw new Error(
-                data.error ||
-                "Voice generation failed."
+            updateProgress(
+                i,
+                chunks.length,
+                `Part ${i + 1} / ${chunks.length} তৈরি হচ্ছে...`
             );
+
+
+            let result = null;
+
+            let lastError = null;
+
+
+            /*
+               Try API keys one by one.
+            */
+
+            for (
+                let keyIndex = 0;
+                keyIndex < keys.length;
+                keyIndex++
+            ) {
+
+                try {
+
+                    result =
+                        await generateGeminiAudio(
+                            keys[keyIndex],
+                            model,
+                            voice,
+                            chunks[i]
+                        );
+
+
+                    /*
+                       Success
+                    */
+
+                    break;
+
+                } catch (error) {
+
+                    lastError =
+                        error;
+
+                    console.warn(
+                        `API Key ${keyIndex + 1} failed:`,
+                        error
+                    );
+
+                }
+
+            }
+
+
+            if (!result) {
+
+                throw new Error(
+                    `Part ${i + 1} তৈরি করা যায়নি। ` +
+                    `${lastError?.message || ""}`
+                );
+
+            }
+
+
+            const pcm =
+                base64ToUint8Array(
+                    result.base64
+                );
+
+
+            /*
+               Gemini TTS returns PCM.
+            */
+
+            const wavBlob =
+                pcmToWav(
+                    pcm,
+                    24000,
+                    1,
+                    16
+                );
+
+
+            const audioUrl =
+                URL.createObjectURL(
+                    wavBlob
+                );
+
+
+            generatedParts.push({
+
+                index: i + 1,
+
+                text: chunks[i],
+
+                blob: wavBlob,
+
+                url: audioUrl,
+
+                duration: null
+
+            });
+
+
+            renderAudioPart(
+                generatedParts[
+                    generatedParts.length - 1
+                ]
+            );
+
         }
 
 
-        // =================================================
-        // JOB ID
-        // =================================================
-
-        currentJobId =
-            data.job_id;
-
-
-        // =================================================
-        // DISPLAY
-        // =================================================
-
-        displayGeneratedVoices(
-            data.parts || []
+        updateProgress(
+            chunks.length,
+            chunks.length,
+            "সবগুলো Voice তৈরি হয়েছে।"
         );
 
 
-        setProgress(
-            data.parts?.length || 0,
-            data.parts?.length || 0,
-            data.parts?.length || 0
+        showResults(
+            chunks.length
         );
 
 
-    }
+    } catch (error) {
 
-    catch (error) {
-
-        console.error(
-            error
-        );
-
+        console.error(error);
 
         showError(
             error.message ||
             "Voice generation failed."
         );
 
-    }
-
-    finally {
+    } finally {
 
         generateBtn.disabled =
             false;
 
-
         generateBtn.textContent =
             "🎙️ Generate Voices";
+
     }
+
 }
 
 
-// =========================================================
-// DISPLAY GENERATED VOICES
-// =========================================================
+/* =========================================================
+   RENDER AUDIO PART
+   ========================================================= */
 
-function displayGeneratedVoices(
-    parts
-) {
+function renderAudioPart(part) {
 
-    const section =
+    const list =
         document.getElementById(
-            "voicesSection"
+            "audioList"
         );
 
 
-    const container =
-        document.getElementById(
-            "voicesContainer"
-        );
+    const card =
+        document.createElement("div");
+
+    card.className =
+        "audio-part";
 
 
-    const count =
-        document.getElementById(
-            "generatedCount"
-        );
+    const title =
+        document.createElement("div");
+
+    title.className =
+        "audio-part-title";
 
 
-    container.innerHTML =
-        "";
+    title.innerHTML =
+        `<strong>Voice Part ${part.index}</strong>`;
 
+
+    const preview =
+        document.createElement("p");
+
+    preview.className =
+        "audio-preview";
+
+
+    preview.textContent =
+        part.text.length > 180
+            ? part.text.substring(0, 180) + "..."
+            : part.text;
+
+
+    const audio =
+        document.createElement("audio");
+
+    audio.controls =
+        true;
+
+    audio.preload =
+        "metadata";
+
+    audio.src =
+        part.url;
+
+
+    const actions =
+        document.createElement("div");
+
+    actions.className =
+        "audio-actions";
+
+
+    const download =
+        document.createElement("a");
+
+    download.className =
+        "download-btn";
+
+    download.href =
+        part.url;
+
+    download.download =
+        `voice-part-${String(part.index).padStart(2, "0")}.wav`;
+
+    download.textContent =
+        "⬇️ Download";
+
+
+    actions.appendChild(
+        download
+    );
+
+
+    card.appendChild(
+        title
+    );
+
+    card.appendChild(
+        preview
+    );
+
+    card.appendChild(
+        audio
+    );
+
+    card.appendChild(
+        actions
+    );
+
+
+    list.appendChild(
+        card
+    );
+
+}
+
+
+/* =========================================================
+   MERGE ALL VOICES
+   =========================================================
+
+   Browser-side WAV PCM merging.
+*/
+
+async function mergeAllVoices() {
 
     if (
-        !parts ||
-        parts.length === 0
+        !generatedParts.length
     ) {
 
-        section.classList.add(
-            "hidden"
-        );
-
-        return;
-    }
-
-
-    section.classList.remove(
-        "hidden"
-    );
-
-
-    count.textContent =
-        `${parts.length} Parts`;
-
-
-    parts.forEach(
-        (part, index) => {
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-
-            card.className =
-                "voice-card";
-
-
-            // =================================================
-            // AUDIO DATA
-            // =================================================
-
-            let audioUrl =
-                "";
-
-
-            if (
-                part.audio_base64
-            ) {
-
-                audioUrl =
-                    `data:${part.mime_type || "audio/wav"};base64,${part.audio_base64}`;
-            }
-
-
-            else if (
-                part.audio_url
-            ) {
-
-                audioUrl =
-                    part.audio_url;
-            }
-
-
-            // =================================================
-            // CARD
-            // =================================================
-
-            card.innerHTML = `
-
-                <div class="voice-card-header">
-
-                    <strong>
-                        🎧 Part ${part.part || index + 1}
-                    </strong>
-
-                    <span>
-                        API Key ${part.api_key_used || "-"}
-                    </span>
-
-                </div>
-
-
-                <div class="voice-text">
-
-                    ${escapeHtml(
-                        part.text || ""
-                    )}
-
-                </div>
-
-
-                ${
-                    audioUrl
-                    ?
-                    `
-
-                    <audio
-                        controls
-                        preload="metadata"
-                        src="${audioUrl}"
-                    ></audio>
-
-
-                    <a
-                        class="download-btn"
-                        href="${audioUrl}"
-                        download="voice-part-${part.part || index + 1}.wav"
-                    >
-                        ⬇ Download Part ${part.part || index + 1}
-                    </a>
-
-                    `
-                    :
-                    `
-                    <p>
-                        Audio পাওয়া যায়নি।
-                    </p>
-                    `
-                }
-
-            `;
-
-
-            container.appendChild(
-                card
-            );
-        }
-    );
-}
-
-
-// =========================================================
-// MERGE ALL
-// =========================================================
-
-async function mergeVoices() {
-
-    hideError();
-
-
-    if (!currentJobId) {
-
         showError(
-            "Merge করার জন্য কোনো completed job পাওয়া যায়নি।"
+            "Merge করার মতো কোনো audio নেই।"
         );
 
         return;
+
     }
 
 
@@ -1384,68 +1532,98 @@ async function mergeVoices() {
     mergeBtn.disabled =
         true;
 
-
     mergeBtn.textContent =
         "⏳ Merging...";
 
 
     try {
 
-        const response =
-            await fetch(
-                `${API_BASE_URL}/api/merge`,
-                {
-
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body: JSON.stringify({
-
-                        job_id:
-                            currentJobId
-                    })
-                }
-            );
+        const audioBuffers = [];
 
 
-        const data =
-            await response.json();
-
-
-        if (
-            !response.ok ||
-            !data.success
+        for (
+            const part of generatedParts
         ) {
 
-            throw new Error(
-                data.error ||
-                "Merge failed."
+            const arrayBuffer =
+                await part.blob.arrayBuffer();
+
+
+            const decoded =
+                parseWavPCM(
+                    arrayBuffer
+                );
+
+
+            audioBuffers.push(
+                decoded
             );
+
         }
 
 
-        if (
-            !data.audio_base64
+        const sampleRate =
+            audioBuffers[0].sampleRate;
+
+
+        let totalSamples = 0;
+
+
+        audioBuffers.forEach(
+            buffer => {
+
+                totalSamples +=
+                    buffer.samples.length;
+
+            }
+        );
+
+
+        const mergedSamples =
+            new Int16Array(
+                totalSamples
+            );
+
+
+        let offset = 0;
+
+
+        for (
+            const buffer of audioBuffers
         ) {
 
-            throw new Error(
-                "Merged audio পাওয়া যায়নি।"
+            mergedSamples.set(
+                buffer.samples,
+                offset
             );
+
+            offset +=
+                buffer.samples.length;
+
         }
 
 
-        const audioUrl =
-            `data:${data.mime_type || "audio/wav"};base64,${data.audio_base64}`;
+        const mergedBlob =
+            pcmSamplesToWav(
+                mergedSamples,
+                sampleRate
+            );
 
 
-        document.getElementById(
-            "mergedAudio"
-        ).src =
-            audioUrl;
+        const mergedUrl =
+            URL.createObjectURL(
+                mergedBlob
+            );
+
+
+        const mergedAudio =
+            document.getElementById(
+                "mergedAudio"
+            );
+
+
+        mergedAudio.src =
+            mergedUrl;
 
 
         const download =
@@ -1455,69 +1633,243 @@ async function mergeVoices() {
 
 
         download.href =
-            audioUrl;
+            mergedUrl;
 
 
-        document
-            .getElementById(
-                "mergedSection"
-            )
-            .classList.remove(
-                "hidden"
-            );
-
-
-    }
-
-    catch (error) {
-
-        console.error(
-            error
+        document.getElementById(
+            "mergedResult"
+        ).classList.remove(
+            "hidden"
         );
 
+
+    } catch (error) {
+
+        console.error(error);
 
         showError(
-            error.message ||
-            "Merge failed."
+            "Audio merge করা যায়নি: " +
+            error.message
         );
 
-    }
-
-    finally {
+    } finally {
 
         mergeBtn.disabled =
             false;
 
-
         mergeBtn.textContent =
             "🔗 Merge All Voices";
+
     }
+
 }
 
 
-// =========================================================
-// PROGRESS
-// =========================================================
+/* =========================================================
+   PARSE WAV PCM
+   ========================================================= */
 
-function setProgress(
+function parseWavPCM(
+    arrayBuffer
+) {
+
+    const view =
+        new DataView(
+            arrayBuffer
+        );
+
+
+    const sampleRate =
+        view.getUint32(
+            24,
+            true
+        );
+
+
+    const bitsPerSample =
+        view.getUint16(
+            34,
+            true
+        );
+
+
+    const channels =
+        view.getUint16(
+            22,
+            true
+        );
+
+
+    if (
+        bitsPerSample !== 16 ||
+        channels !== 1
+    ) {
+
+        throw new Error(
+            "Only mono 16-bit WAV is supported."
+        );
+
+    }
+
+
+    let dataOffset = 12;
+
+    let dataSize = 0;
+
+
+    while (
+        dataOffset + 8 <=
+        view.byteLength
+    ) {
+
+        const chunkId =
+            String.fromCharCode(
+                view.getUint8(dataOffset),
+                view.getUint8(dataOffset + 1),
+                view.getUint8(dataOffset + 2),
+                view.getUint8(dataOffset + 3)
+            );
+
+
+        const chunkSize =
+            view.getUint32(
+                dataOffset + 4,
+                true
+            );
+
+
+        if (
+            chunkId === "data"
+        ) {
+
+            dataOffset += 8;
+
+            dataSize =
+                chunkSize;
+
+            break;
+
+        }
+
+
+        dataOffset +=
+            8 + chunkSize;
+
+    }
+
+
+    if (!dataSize) {
+
+        throw new Error(
+            "WAV data chunk পাওয়া যায়নি।"
+        );
+
+    }
+
+
+    const samples =
+        new Int16Array(
+            arrayBuffer,
+            dataOffset,
+            Math.floor(
+                dataSize / 2
+            )
+        );
+
+
+    return {
+
+        sampleRate,
+
+        samples:
+            new Int16Array(
+                samples
+            )
+
+    };
+
+}
+
+
+/* =========================================================
+   PCM SAMPLES → WAV
+   ========================================================= */
+
+function pcmSamplesToWav(
+    samples,
+    sampleRate
+) {
+
+    const pcmBytes =
+        new Uint8Array(
+            samples.length * 2
+        );
+
+
+    const view =
+        new DataView(
+            pcmBytes.buffer
+        );
+
+
+    for (
+        let i = 0;
+        i < samples.length;
+        i++
+    ) {
+
+        view.setInt16(
+            i * 2,
+            samples[i],
+            true
+        );
+
+    }
+
+
+    return pcmToWav(
+        pcmBytes,
+        sampleRate,
+        1,
+        16
+    );
+
+}
+
+
+/* =========================================================
+   PROGRESS UI
+   ========================================================= */
+
+function showProgress() {
+
+    document
+        .getElementById(
+            "progressSection"
+        )
+        .classList.remove(
+            "hidden"
+        );
+
+}
+
+
+function updateProgress(
     current,
     total,
-    apiKey
+    message
 ) {
 
     const percent =
-        total > 0
-            ? Math.min(
-                100,
-                Math.round(
-                    (current / total) * 100
-                )
+        total
+            ? Math.round(
+                (current / total) * 100
             )
             : 0;
 
 
     document.getElementById(
-        "progressBar"
+        "progressFill"
     ).style.width =
         `${percent}%`;
 
@@ -1529,27 +1881,39 @@ function setProgress(
 
 
     document.getElementById(
-        "currentPart"
+        "progressMessage"
     ).textContent =
-        `Part ${current} / ${total}`;
+        message;
 
-
-    document.getElementById(
-        "currentApiKey"
-    ).textContent =
-        apiKey
-            ? `API Key ${apiKey}`
-            : "API Key -";
 }
 
 
-// =========================================================
-// ERROR
-// =========================================================
+function showResults(total) {
 
-function showError(
-    message
-) {
+    const section =
+        document.getElementById(
+            "resultsSection"
+        );
+
+
+    section.classList.remove(
+        "hidden"
+    );
+
+
+    document.getElementById(
+        "resultSummary"
+    ).textContent =
+        `${total}টি আলাদা voice part তৈরি হয়েছে।`;
+
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+function showError(message) {
 
     const box =
         document.getElementById(
@@ -1557,19 +1921,18 @@ function showError(
         );
 
 
-    document.getElementById(
-        "errorText"
-    ).textContent =
+    box.textContent =
         message;
 
 
     box.classList.remove(
         "hidden"
     );
+
 }
 
 
-function hideError() {
+function clearError() {
 
     document
         .getElementById(
@@ -1578,44 +1941,22 @@ function hideError() {
         .classList.add(
             "hidden"
         );
+
 }
 
 
-// =========================================================
-// ESCAPE HTML
-// =========================================================
+/* =========================================================
+   INITIALIZATION
+   ========================================================= */
 
-function escapeHtml(
-    value
-) {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    return String(value)
+        updateTextInfo();
 
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-}
+    }
+);
 
 </script>
 
