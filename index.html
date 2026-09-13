@@ -1,1325 +1,1623 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>AI Voice Generator</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 </head>
 
 <body>
 
-    <div class="app-container">
+<div class="app-container">
 
-        <!-- ================= HEADER ================= -->
-        <header class="app-header">
-            <div>
-                <h1>AI Voice Generator</h1>
-                <p>Generate long-form voice from your text</p>
-            </div>
+    <!-- ================================================= -->
+    <!-- HEADER -->
+    <!-- ================================================= -->
 
-            <div class="status-indicator">
-                <span class="status-dot"></span>
-                <span>Ready</span>
-            </div>
-        </header>
+    <header class="app-header">
 
+        <div>
+            <h1>AI Voice Generator</h1>
 
-        <!-- ================= API KEYS ================= -->
-        <section class="card">
+            <p>
+                Gemini AI দিয়ে বাংলা Voice তৈরি করুন
+            </p>
+        </div>
 
-            <div class="section-title">
-                <h2>API Keys</h2>
-                <p>Add multiple API keys for automatic fallback.</p>
-            </div>
+    </header>
 
-            <div id="apiKeysContainer">
 
-                <div class="api-key-row">
-                    <label>API Key 1</label>
+    <!-- ================================================= -->
+    <!-- API KEYS -->
+    <!-- ================================================= -->
 
-                    <div class="input-with-button">
-                        <input
-                            type="password"
-                            class="api-key-input"
-                            placeholder="Enter API Key 1"
-                            autocomplete="off"
-                        >
+    <section class="card">
 
-                        <button
-                            type="button"
-                            class="toggle-key-btn"
-                            onclick="toggleApiKey(this)"
-                        >
-                            Show
-                        </button>
-                    </div>
-                </div>
+        <div class="section-title">
 
+            <h2>🔑 Gemini API Keys</h2>
 
-                <div class="api-key-row">
-                    <label>API Key 2</label>
+            <span>
+                একাধিক Key ব্যবহার করুন
+            </span>
 
-                    <div class="input-with-button">
-                        <input
-                            type="password"
-                            class="api-key-input"
-                            placeholder="Enter API Key 2"
-                            autocomplete="off"
-                        >
+        </div>
 
-                        <button
-                            type="button"
-                            class="toggle-key-btn"
-                            onclick="toggleApiKey(this)"
-                        >
-                            Show
-                        </button>
-                    </div>
-                </div>
+        <div id="apiKeysContainer">
 
+            <div class="api-key-row">
 
-                <div class="api-key-row">
-                    <label>API Key 3</label>
-
-                    <div class="input-with-button">
-                        <input
-                            type="password"
-                            class="api-key-input"
-                            placeholder="Enter API Key 3"
-                            autocomplete="off"
-                        >
-
-                        <button
-                            type="button"
-                            class="toggle-key-btn"
-                            onclick="toggleApiKey(this)"
-                        >
-                            Show
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="secondary-btn"
-                onclick="addApiKey()"
-            >
-                + Add API Key
-            </button>
-
-        </section>
-
-
-
-        <!-- ================= VOICE SETTINGS ================= -->
-        <section class="card">
-
-            <div class="section-title">
-                <h2>Voice Settings</h2>
-                <p>Choose the voice model and generation settings.</p>
-            </div>
-
-
-            <div class="form-grid">
-
-                <!-- Voice Model -->
-                <div class="form-group">
-
-                    <label for="voiceModel">
-                        Voice Model
-                    </label>
-
-                    <select id="voiceModel">
-
-                        <option value="">
-                            Select Voice Model
-                        </option>
-
-                        <!-- Backend will provide models later -->
-
-                    </select>
-
-                </div>
-
-
-                <!-- Temperature -->
-                <div class="form-group">
-
-                    <label for="temperature">
-                        Temperature
-                        <span id="temperatureValue">0.7</span>
-                    </label>
-
-                    <input
-                        type="range"
-                        id="temperature"
-                        min="0"
-                        max="1"
-                        step="0.1"
-                        value="0.7"
-                        oninput="updateTemperature(this.value)"
-                    >
-
-                    <div class="range-labels">
-                        <span>0</span>
-                        <span>1</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- ================= TEXT INPUT ================= -->
-        <section class="card">
-
-            <div class="section-title">
-
-                <div>
-                    <h2>Your Text</h2>
-                    <p>
-                        Enter any length of text. The system will automatically
-                        divide it into approximately 2.5-minute sections.
-                    </p>
-                </div>
-
-                <div class="character-counter">
-                    <span id="characterCount">0</span>
-                    characters
-                </div>
-
-            </div>
-
-
-            <textarea
-                id="textInput"
-                placeholder="Paste or type your text here..."
-                oninput="updateCharacterCount()"
-            ></textarea>
-
-
-            <div class="text-info">
-
-                <span>
-                    Estimated duration:
-                    <strong id="estimatedDuration">0 min</strong>
-                </span>
-
-                <span>
-                    Estimated parts:
-                    <strong id="estimatedParts">0</strong>
-                </span>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- ================= GENERATE ================= -->
-        <section class="generate-section">
-
-            <button
-                type="button"
-                id="generateButton"
-                class="generate-btn"
-                onclick="generateVoices()"
-            >
-                <span id="generateButtonText">
-                    Generate Voices
-                </span>
-
-                <span
-                    id="generateLoader"
-                    class="loader hidden"
-                ></span>
-            </button>
-
-        </section>
-
-
-
-        <!-- ================= GENERATION PROGRESS ================= -->
-        <section
-            id="progressSection"
-            class="card hidden"
-        >
-
-            <div class="section-title">
-
-                <div>
-                    <h2>Generation Progress</h2>
-                    <p id="progressText">
-                        Preparing...
-                    </p>
-                </div>
-
-                <strong id="progressPercentage">
-                    0%
-                </strong>
-
-            </div>
-
-
-            <div class="progress-bar">
-
-                <div
-                    id="progressBar"
-                    class="progress-fill"
-                    style="width: 0%"
-                ></div>
-
-            </div>
-
-
-            <div class="generation-status">
-
-                <span>
-                    Current Part:
-                    <strong id="currentPart">
-                        0 / 0
-                    </strong>
-                </span>
-
-                <span>
-                    API Key:
-                    <strong id="currentApiKey">
-                        -
-                    </strong>
-                </span>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- ================= GENERATED VOICES ================= -->
-        <section
-            id="voicesSection"
-            class="card hidden"
-        >
-
-            <div class="section-title">
-
-                <div>
-                    <h2>Generated Voices</h2>
-                    <p>
-                        Listen to or download each generated voice separately.
-                    </p>
-                </div>
-
-                <span id="completedCount">
-                    0 parts
-                </span>
-
-            </div>
-
-
-            <!-- Voice cards will be inserted here -->
-            <div id="voiceList"></div>
-
-
-            <!-- ================= MERGE ================= -->
-            <div
-                id="mergeSection"
-                class="merge-section hidden"
-            >
-
-                <div class="merge-info">
-
-                    <h3>Combine All Voices</h3>
-
-                    <p>
-                        Merge all generated parts into one complete audio file.
-                    </p>
-
-                </div>
-
+                <input
+                    type="password"
+                    class="api-key-input"
+                    placeholder="Gemini API Key 1"
+                    autocomplete="off"
+                >
 
                 <button
                     type="button"
-                    id="mergeButton"
-                    class="merge-btn"
-                    onclick="mergeVoices()"
+                    class="show-key-btn"
+                    onclick="toggleApiKey(this)"
                 >
-                    Merge All Voices
+                    Show
                 </button>
 
             </div>
 
 
-            <!-- ================= MERGED AUDIO ================= -->
-            <div
-                id="mergedAudioSection"
-                class="merged-audio hidden"
-            >
+            <div class="api-key-row">
 
-                <h3>Complete Voice</h3>
-
-                <audio
-                    id="mergedAudioPlayer"
-                    controls
-                ></audio>
-
-
-                <a
-                    id="mergedDownloadButton"
-                    class="download-btn"
-                    href="#"
-                    download="complete_voice.wav"
+                <input
+                    type="password"
+                    class="api-key-input"
+                    placeholder="Gemini API Key 2"
+                    autocomplete="off"
                 >
-                    Download Complete Voice
-                </a>
+
+                <button
+                    type="button"
+                    class="show-key-btn"
+                    onclick="toggleApiKey(this)"
+                >
+                    Show
+                </button>
 
             </div>
 
-        </section>
+
+            <div class="api-key-row">
+
+                <input
+                    type="password"
+                    class="api-key-input"
+                    placeholder="Gemini API Key 3"
+                    autocomplete="off"
+                >
+
+                <button
+                    type="button"
+                    class="show-key-btn"
+                    onclick="toggleApiKey(this)"
+                >
+                    Show
+                </button>
+
+            </div>
+
+        </div>
 
 
+        <button
+            type="button"
+            class="secondary-btn"
+            onclick="addApiKey()"
+        >
+            + Add API Key
+        </button>
 
-        <!-- ================= ERROR ================= -->
-        <div
-            id="errorMessage"
-            class="error-message hidden"
-        ></div>
-
-
-        <!-- ================= FOOTER ================= -->
-        <footer>
-
-            <p>
-                AI Voice Generator
-            </p>
-
-        </footer>
-
-    </div>
+    </section>
 
 
+    <!-- ================================================= -->
+    <!-- VOICE SETTINGS -->
+    <!-- ================================================= -->
 
-    <!-- ==================================================
-         JAVASCRIPT
-         ================================================== -->
+    <section class="card">
 
-    <script>
+        <div class="section-title">
 
-        /*
-         * ================================================
-         * CONFIGURATION
-         * ================================================
-         */
+            <h2>🎙️ Voice Settings</h2>
 
-        /*
-         * Later this will point to your Python backend.
-         *
-         * Example:
-         *
-         * const API_BASE_URL =
-         *     "https://your-python-server.com";
-         *
-         */
+            <span id="modelStatus">
+                Loading...
+            </span>
 
-        const API_BASE_URL = "";
+        </div>
 
 
+        <!-- MODEL -->
 
-        /*
-         * ================================================
-         * API KEY MANAGEMENT
-         * ================================================
-         */
+        <div class="setting-group">
 
-        let apiKeyCount = 3;
+            <label for="modelSelect">
+                Gemini TTS Model
+            </label>
 
+            <select id="modelSelect">
 
-        function addApiKey() {
+                <option value="">
+                    Loading models...
+                </option>
 
-            apiKeyCount++;
+            </select>
 
-            const container =
-                document.getElementById("apiKeysContainer");
-
-
-            const row =
-                document.createElement("div");
-
-            row.className = "api-key-row";
+        </div>
 
 
-            row.innerHTML = `
+        <!-- VOICE -->
 
-                <label>API Key ${apiKeyCount}</label>
+        <div class="setting-group">
 
-                <div class="input-with-button">
+            <label for="voiceModel">
+                Voice
+            </label>
 
-                    <input
-                        type="password"
-                        class="api-key-input"
-                        placeholder="Enter API Key ${apiKeyCount}"
-                        autocomplete="off"
-                    >
+            <select id="voiceModel">
 
-                    <button
-                        type="button"
-                        class="toggle-key-btn"
-                        onclick="toggleApiKey(this)"
-                    >
-                        Show
-                    </button>
+                <option value="">
+                    Loading voices...
+                </option>
 
-                </div>
+            </select>
 
-            `;
+        </div>
 
 
-            container.appendChild(row);
+        <!-- TEMPERATURE -->
 
+        <div class="setting-group">
+
+            <div class="range-header">
+
+                <label for="temperature">
+                    Temperature
+                </label>
+
+                <span id="temperatureValue">
+                    0.7
+                </span>
+
+            </div>
+
+
+            <input
+                type="range"
+                id="temperature"
+                min="0"
+                max="1"
+                step="0.1"
+                value="0.7"
+            >
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- TEXT INPUT -->
+    <!-- ================================================= -->
+
+    <section class="card">
+
+        <div class="section-title">
+
+            <h2>📝 Text</h2>
+
+            <span id="charCount">
+                0 characters
+            </span>
+
+        </div>
+
+
+        <textarea
+            id="textInput"
+            placeholder="এখানে আপনার বাংলা স্ক্রিপ্ট লিখুন বা Paste করুন..."
+        ></textarea>
+
+
+        <div class="text-info">
+
+            <span>
+                আনুমানিক সময়:
+                <strong id="estimatedDuration">
+                    0 মিনিট
+                </strong>
+            </span>
+
+            <span>
+                আনুমানিক Parts:
+                <strong id="estimatedParts">
+                    0
+                </strong>
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- GENERATE -->
+    <!-- ================================================= -->
+
+    <section class="generate-section">
+
+        <button
+            type="button"
+            id="generateBtn"
+            class="primary-btn"
+            onclick="generateVoices()"
+        >
+            🎙️ Generate Voices
+        </button>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- PROGRESS -->
+    <!-- ================================================= -->
+
+    <section
+        class="card hidden"
+        id="progressSection"
+    >
+
+        <div class="section-title">
+
+            <h2>⚡ Generation Progress</h2>
+
+            <span id="progressText">
+                Preparing...
+            </span>
+
+        </div>
+
+
+        <div class="progress-container">
+
+            <div
+                class="progress-bar"
+                id="progressBar"
+            ></div>
+
+        </div>
+
+
+        <div class="progress-info">
+
+            <span id="currentPart">
+                Part 0 / 0
+            </span>
+
+            <span id="currentApiKey">
+                API Key -
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- GENERATED VOICES -->
+    <!-- ================================================= -->
+
+    <section
+        class="card hidden"
+        id="voicesSection"
+    >
+
+        <div class="section-title">
+
+            <h2>🎧 Generated Voices</h2>
+
+            <span id="generatedCount">
+                0 Parts
+            </span>
+
+        </div>
+
+
+        <div id="voicesContainer"></div>
+
+
+        <!-- MERGE -->
+
+        <div class="merge-section">
+
+            <button
+                type="button"
+                id="mergeBtn"
+                class="secondary-btn"
+                onclick="mergeVoices()"
+            >
+                🔗 Merge All Voices
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- MERGED AUDIO -->
+    <!-- ================================================= -->
+
+    <section
+        class="card hidden"
+        id="mergedSection"
+    >
+
+        <div class="section-title">
+
+            <h2>🎵 Complete Voice</h2>
+
+        </div>
+
+
+        <audio
+            id="mergedAudio"
+            controls
+            preload="metadata"
+        ></audio>
+
+
+        <a
+            id="mergedDownload"
+            class="download-btn"
+            href="#"
+            download="merged-voice.wav"
+        >
+            ⬇ Download Complete Voice
+        </a>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- ERROR -->
+    <!-- ================================================= -->
+
+    <section
+        class="error-box hidden"
+        id="errorBox"
+    >
+
+        <strong>❌ Error</strong>
+
+        <p id="errorText"></p>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- FOOTER -->
+    <!-- ================================================= -->
+
+    <footer>
+
+        AI Voice Generator • Gemini TTS
+
+    </footer>
+
+</div>
+
+
+<script>
+
+"use strict";
+
+
+// =========================================================
+// BACKEND URL
+// =========================================================
+//
+// যদি frontend এবং Flask একই server-এ চলে,
+// তাহলে "" রাখুন.
+//
+// GitHub Pages + আলাদা Python server হলে:
+//
+// const API_BASE_URL = "https://YOUR-BACKEND-URL.com";
+//
+// =========================================================
+
+const API_BASE_URL = "";
+
+
+// =========================================================
+// GLOBAL
+// =========================================================
+
+let currentJobId = null;
+
+
+// =========================================================
+// PAGE LOAD
+// =========================================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        loadModelsAndVoices();
+
+        updateTextInfo();
+
+        document
+            .getElementById("temperature")
+            .addEventListener(
+                "input",
+                updateTemperature
+            );
+
+        document
+            .getElementById("textInput")
+            .addEventListener(
+                "input",
+                updateTextInfo
+            );
+    }
+);
+
+
+// =========================================================
+// LOAD MODELS + VOICES
+// =========================================================
+
+async function loadModelsAndVoices() {
+
+    const modelSelect =
+        document.getElementById(
+            "modelSelect"
+        );
+
+    const voiceSelect =
+        document.getElementById(
+            "voiceModel"
+        );
+
+    const status =
+        document.getElementById(
+            "modelStatus"
+        );
+
+
+    modelSelect.innerHTML = `
+        <option value="">
+            Loading models...
+        </option>
+    `;
+
+    voiceSelect.innerHTML = `
+        <option value="">
+            Loading voices...
+        </option>
+    `;
+
+    status.textContent =
+        "Connecting...";
+
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE_URL}/api/models`
+        );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `Server returned ${response.status}`
+            );
         }
 
 
+        const data =
+            await response.json();
 
-        function toggleApiKey(button) {
 
-            const input =
-                button.previousElementSibling;
+        console.log(
+            "Gemini API response:",
+            data
+        );
 
 
-            if (input.type === "password") {
+        // =================================================
+        // MODELS
+        // =================================================
 
-                input.type = "text";
+        modelSelect.innerHTML = "";
 
-                button.textContent = "Hide";
 
-            } else {
-
-                input.type = "password";
-
-                button.textContent = "Show";
-
-            }
-
-        }
-
-
-
-        function getApiKeys() {
-
-            const inputs =
-                document.querySelectorAll(".api-key-input");
-
-
-            const keys = [];
-
-
-            inputs.forEach(input => {
-
-                const value =
-                    input.value.trim();
-
-                if (value) {
-                    keys.push(value);
-                }
-
-            });
-
-
-            return keys;
-
-        }
-
-
-
-        /*
-         * ================================================
-         * TEMPERATURE
-         * ================================================
-         */
-
-        function updateTemperature(value) {
-
-            document.getElementById(
-                "temperatureValue"
-            ).textContent = value;
-
-        }
-
-
-
-        /*
-         * ================================================
-         * TEXT INFORMATION
-         * ================================================
-         */
-
-        function updateCharacterCount() {
-
-            const text =
-                document.getElementById(
-                    "textInput"
-                ).value;
-
-
-            const characters =
-                text.length;
-
-
-            document.getElementById(
-                "characterCount"
-            ).textContent = characters;
-
-
-            /*
-             * Rough estimation.
-             *
-             * This is only a frontend estimate.
-             * The Python backend will perform the
-             * actual intelligent text splitting.
-             */
-
-            const words =
-                text.trim()
-                    ? text.trim().split(/\s+/).length
-                    : 0;
-
-
-            /*
-             * Approximate speaking speed:
-             * 130 words/minute
-             */
-
-            const minutes =
-                words / 130;
-
-
-            document.getElementById(
-                "estimatedDuration"
-            ).textContent =
-                minutes > 0
-                    ? minutes.toFixed(1) + " min"
-                    : "0 min";
-
-
-            const parts =
-                minutes > 0
-                    ? Math.ceil(minutes / 2.5)
-                    : 0;
-
-
-            document.getElementById(
-                "estimatedParts"
-            ).textContent =
-                parts;
-
-        }
-
-
-
-        /*
-         * ================================================
-         * UI HELPERS
-         * ================================================
-         */
-
-        function showElement(id) {
-
-            document
-                .getElementById(id)
-                .classList.remove("hidden");
-
-        }
-
-
-
-        function hideElement(id) {
-
-            document
-                .getElementById(id)
-                .classList.add("hidden");
-
-        }
-
-
-
-        function showError(message) {
-
-            const error =
-                document.getElementById(
-                    "errorMessage"
-                );
-
-
-            error.textContent = message;
-
-            error.classList.remove("hidden");
-
-        }
-
-
-
-        function clearError() {
-
-            hideElement("errorMessage");
-
-        }
-
-
-
-        function setProgress(
-            percentage,
-            current,
-            total,
-            apiKey
+        if (
+            Array.isArray(data.models) &&
+            data.models.length > 0
         ) {
 
-            document.getElementById(
-                "progressBar"
-            ).style.width =
-                percentage + "%";
+            data.models.forEach(
+                model => {
 
-
-            document.getElementById(
-                "progressPercentage"
-            ).textContent =
-                percentage + "%";
-
-
-            document.getElementById(
-                "currentPart"
-            ).textContent =
-                `${current} / ${total}`;
-
-
-            document.getElementById(
-                "currentApiKey"
-            ).textContent =
-                apiKey || "-";
-
-        }
-
-
-
-        /*
-         * ================================================
-         * GENERATE VOICES
-         * ================================================
-         */
-
-        async function generateVoices() {
-
-            clearError();
-
-
-            const apiKeys =
-                getApiKeys();
-
-
-            const model =
-                document.getElementById(
-                    "voiceModel"
-                ).value;
-
-
-            const temperature =
-                parseFloat(
-                    document.getElementById(
-                        "temperature"
-                    ).value
-                );
-
-
-            const text =
-                document.getElementById(
-                    "textInput"
-                ).value.trim();
-
-
-
-            /*
-             * Basic validation
-             */
-
-            if (apiKeys.length === 0) {
-
-                showError(
-                    "Please enter at least one API key."
-                );
-
-                return;
-
-            }
-
-
-            if (!model) {
-
-                showError(
-                    "Please select a voice model."
-                );
-
-                return;
-
-            }
-
-
-            if (!text) {
-
-                showError(
-                    "Please enter some text."
-                );
-
-                return;
-
-            }
-
-
-
-            /*
-             * UI state
-             */
-
-            const button =
-                document.getElementById(
-                    "generateButton"
-                );
-
-
-            button.disabled = true;
-
-
-            document.getElementById(
-                "generateButtonText"
-            ).textContent =
-                "Generating...";
-
-
-            document
-                .getElementById(
-                    "generateLoader"
-                )
-                .classList.remove(
-                    "hidden"
-                );
-
-
-            showElement("progressSection");
-
-
-            hideElement("voicesSection");
-
-
-            /*
-             * Clear previous voices
-             */
-
-            document.getElementById(
-                "voiceList"
-            ).innerHTML = "";
-
-
-
-            try {
-
-                /*
-                 * Send everything to Python backend.
-                 *
-                 * The backend will:
-                 *
-                 * 1. Split text
-                 * 2. Generate each part
-                 * 3. Automatically switch API keys
-                 * 4. Return audio data
-                 */
-
-                const response =
-                    await fetch(
-                        API_BASE_URL +
-                        "/api/generate",
-                        {
-
-                            method: "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            body:
-                                JSON.stringify({
-
-                                    api_keys:
-                                        apiKeys,
-
-                                    model:
-                                        model,
-
-                                    temperature:
-                                        temperature,
-
-                                    text:
-                                        text
-
-                                })
-
-                        }
-                    );
-
-
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        "Voice generation failed."
-                    );
-
-                }
-
-
-                const data =
-                    await response.json();
-
-
-                /*
-                 * Backend response will contain
-                 * generated audio information.
-                 */
-
-                if (
-                    data.parts &&
-                    Array.isArray(data.parts)
-                ) {
-
-                    displayGeneratedVoices(
-                        data.parts
-                    );
-
-                }
-
-
-                showElement(
-                    "voicesSection"
-                );
-
-
-                setProgress(
-                    100,
-                    data.parts
-                        ? data.parts.length
-                        : 0,
-                    data.parts
-                        ? data.parts.length
-                        : 0,
-                    "-"
-                );
-
-
-            } catch (error) {
-
-                console.error(error);
-
-                showError(
-                    error.message ||
-                    "Something went wrong while generating voices."
-                );
-
-            } finally {
-
-                button.disabled = false;
-
-
-                document.getElementById(
-                    "generateButtonText"
-                ).textContent =
-                    "Generate Voices";
-
-
-                document
-                    .getElementById(
-                        "generateLoader"
-                    )
-                    .classList.add(
-                        "hidden"
-                    );
-
-            }
-
-        }
-
-
-
-        /*
-         * ================================================
-         * DISPLAY GENERATED VOICES
-         * ================================================
-         */
-
-        function displayGeneratedVoices(parts) {
-
-            const list =
-                document.getElementById(
-                    "voiceList"
-                );
-
-
-            list.innerHTML = "";
-
-
-            parts.forEach(
-                (part, index) => {
-
-                    const card =
+                    const option =
                         document.createElement(
-                            "div"
+                            "option"
                         );
 
 
-                    card.className =
-                        "voice-card";
+                    option.value =
+                        model.id;
 
 
-                    /*
-                     * Backend can return either:
-                     *
-                     * audio_url
-                     *
-                     * or
-                     *
-                     * audio_base64
-                     *
-                     */
+                    option.textContent =
+                        model.name ||
+                        model.id;
 
 
-                    let audioURL =
-                        part.audio_url ||
-                        "";
+                    modelSelect.appendChild(
+                        option
+                    );
+                }
+            );
+
+        } else {
+
+            modelSelect.innerHTML = `
+                <option value="">
+                    No models found
+                </option>
+            `;
+        }
 
 
+        // =================================================
+        // VOICES
+        // =================================================
+
+        voiceSelect.innerHTML = "";
+
+
+        if (
+            Array.isArray(data.voices) &&
+            data.voices.length > 0
+        ) {
+
+            data.voices.forEach(
+                voice => {
+
+                    const option =
+                        document.createElement(
+                            "option"
+                        );
+
+
+                    // Backend যদি শুধু string পাঠায়
                     if (
-                        !audioURL &&
-                        part.audio_base64
+                        typeof voice ===
+                        "string"
                     ) {
 
-                        audioURL =
-                            "data:" +
-                            (
-                                part.mime_type ||
-                                "audio/wav"
-                            ) +
-                            ";base64," +
-                            part.audio_base64;
+                        option.value =
+                            voice;
 
+                        option.textContent =
+                            voice;
                     }
 
 
+                    // Backend যদি object পাঠায়
+                    else {
 
-                    card.innerHTML = `
+                        option.value =
+                            voice.id;
 
-                        <div class="voice-card-header">
-
-                            <div>
-
-                                <h3>
-                                    Part ${index + 1}
-                                </h3>
-
-                                <span>
-                                    ${
-                                        part.duration
-                                            ? part.duration
-                                            : "Audio generated"
-                                    }
-                                </span>
-
-                            </div>
-
-                            <span class="voice-status">
-                                ✓ Ready
-                            </span>
-
-                        </div>
+                        option.textContent =
+                            voice.name ||
+                            voice.id;
+                    }
 
 
-                        <audio
-                            controls
-                            src="${audioURL}"
-                        ></audio>
-
-
-                        <div class="voice-actions">
-
-                            <a
-                                class="download-btn"
-                                href="${audioURL}"
-                                download="voice_part_${String(
-                                    index + 1
-                                ).padStart(2, "0")}.wav"
-                            >
-                                Download
-                            </a>
-
-                        </div>
-
-                    `;
-
-
-                    list.appendChild(card);
-
+                    voiceSelect.appendChild(
+                        option
+                    );
                 }
             );
 
 
-            document.getElementById(
-                "completedCount"
-            ).textContent =
-                `${parts.length} parts`;
+            // Default voice
+            if (
+                data.voices.includes &&
+                data.voices.includes("Kore")
+            ) {
 
-
-            /*
-             * Show merge button
-             * if there is more than one part.
-             */
-
-            if (parts.length > 1) {
-
-                showElement(
-                    "mergeSection"
-                );
-
-            } else {
-
-                hideElement(
-                    "mergeSection"
-                );
-
+                voiceSelect.value =
+                    "Kore";
             }
 
+        } else {
+
+            voiceSelect.innerHTML = `
+                <option value="">
+                    No voices found
+                </option>
+            `;
         }
 
 
+        // =================================================
+        // STATUS
+        // =================================================
 
-        /*
-         * ================================================
-         * MERGE VOICES
-         * ================================================
-         */
+        status.textContent =
+            `${data.voices?.length || 0} voices loaded`;
 
-        async function mergeVoices() {
 
-            clearError();
-
-
-            const button =
-                document.getElementById(
-                    "mergeButton"
-                );
-
-
-            button.disabled = true;
-
-
-            button.textContent =
-                "Merging...";
-
-
-            try {
-
-                /*
-                 * Later the Python backend will
-                 * receive the generated audio
-                 * information and merge them.
-                 */
-
-                const response =
-                    await fetch(
-                        API_BASE_URL +
-                        "/api/merge",
-                        {
-
-                            method: "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            }
-
-                        }
-                    );
-
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        "Audio merge failed."
-                    );
-
-                }
-
-
-                const data =
-                    await response.json();
-
-
-                if (!data.audio_url) {
-
-                    throw new Error(
-                        "Merged audio was not returned."
-                    );
-
-                }
-
-
-                document.getElementById(
-                    "mergedAudioPlayer"
-                ).src =
-                    data.audio_url;
-
-
-                document.getElementById(
-                    "mergedDownloadButton"
-                ).href =
-                    data.audio_url;
-
-
-                showElement(
-                    "mergedAudioSection"
-                );
-
-
-            } catch (error) {
-
-                console.error(error);
-
-                showError(
-                    error.message ||
-                    "Unable to merge audio."
-                );
-
-            } finally {
-
-                button.disabled = false;
-
-                button.textContent =
-                    "Merge All Voices";
-
-            }
-
-        }
-
-
-
-        /*
-         * ================================================
-         * LOAD VOICE MODELS
-         * ================================================
-         */
-
-        async function loadVoiceModels() {
-
-            /*
-             * The Python backend will later
-             * provide the available models.
-             */
-
-            try {
-
-                const response =
-                    await fetch(
-                        API_BASE_URL +
-                        "/api/models"
-                    );
-
-
-                if (!response.ok) {
-                    return;
-                }
-
-
-                const data =
-                    await response.json();
-
-
-                const select =
-                    document.getElementById(
-                        "voiceModel"
-                    );
-
-
-                select.innerHTML =
-                    '<option value="">Select Voice Model</option>';
-
-
-                if (
-                    data.models &&
-                    Array.isArray(data.models)
-                ) {
-
-                    data.models.forEach(
-                        model => {
-
-                            const option =
-                                document.createElement(
-                                    "option"
-                                );
-
-
-                            option.value =
-                                model.id ||
-                                model;
-
-
-                            option.textContent =
-                                model.name ||
-                                model.id ||
-                                model;
-
-
-                            select.appendChild(
-                                option
-                            );
-
-                        }
-                    );
-
-                }
-
-            } catch (error) {
-
-                console.log(
-                    "Backend not connected yet."
-                );
-
-            }
-
-        }
-
-
-
-        /*
-         * ================================================
-         * INITIALIZE
-         * ================================================
-         */
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            () => {
-
-                updateCharacterCount();
-
-                loadVoiceModels();
-
-            }
+        console.log(
+            "Models:",
+            data.models
         );
 
-    </script>
+        console.log(
+            "Voices:",
+            data.voices
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Model/Voice loading error:",
+            error
+        );
+
+
+        modelSelect.innerHTML = `
+            <option value="">
+                Failed to load models
+            </option>
+        `;
+
+
+        voiceSelect.innerHTML = `
+            <option value="">
+                Failed to load voices
+            </option>
+        `;
+
+
+        status.textContent =
+            "Backend connection failed";
+
+
+        showError(
+            "Backend server-এর সাথে connection হচ্ছে না। " +
+            "Python app.py চালু আছে কিনা এবং API_BASE_URL ঠিক আছে কিনা দেখুন।"
+        );
+    }
+}
+
+
+// =========================================================
+// API KEY
+// =========================================================
+
+function addApiKey() {
+
+    const container =
+        document.getElementById(
+            "apiKeysContainer"
+        );
+
+
+    const count =
+        container.querySelectorAll(
+            ".api-key-input"
+        ).length + 1;
+
+
+    const row =
+        document.createElement(
+            "div"
+        );
+
+
+    row.className =
+        "api-key-row";
+
+
+    row.innerHTML = `
+
+        <input
+            type="password"
+            class="api-key-input"
+            placeholder="Gemini API Key ${count}"
+            autocomplete="off"
+        >
+
+        <button
+            type="button"
+            class="show-key-btn"
+            onclick="toggleApiKey(this)"
+        >
+            Show
+        </button>
+
+    `;
+
+
+    container.appendChild(
+        row
+    );
+}
+
+
+// =========================================================
+// SHOW / HIDE API KEY
+// =========================================================
+
+function toggleApiKey(button) {
+
+    const input =
+        button.parentElement.querySelector(
+            ".api-key-input"
+        );
+
+
+    if (
+        input.type ===
+        "password"
+    ) {
+
+        input.type =
+            "text";
+
+        button.textContent =
+            "Hide";
+
+    } else {
+
+        input.type =
+            "password";
+
+        button.textContent =
+            "Show";
+    }
+}
+
+
+// =========================================================
+// TEMPERATURE
+// =========================================================
+
+function updateTemperature() {
+
+    const value =
+        document.getElementById(
+            "temperature"
+        ).value;
+
+
+    document.getElementById(
+        "temperatureValue"
+    ).textContent =
+        value;
+}
+
+
+// =========================================================
+// TEXT INFO
+// =========================================================
+
+function updateTextInfo() {
+
+    const text =
+        document.getElementById(
+            "textInput"
+        ).value;
+
+
+    const characters =
+        text.length;
+
+
+    document.getElementById(
+        "charCount"
+    ).textContent =
+        `${characters.toLocaleString()} characters`;
+
+
+    // Approximate Bengali narration:
+    // around 120-130 words/minute
+
+    const words =
+        text
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean)
+            .length;
+
+
+    const minutes =
+        words > 0
+            ? words / 125
+            : 0;
+
+
+    document.getElementById(
+        "estimatedDuration"
+    ).textContent =
+        formatMinutes(
+            minutes
+        );
+
+
+    const parts =
+        words > 0
+            ? Math.ceil(
+                minutes / 2.5
+            )
+            : 0;
+
+
+    document.getElementById(
+        "estimatedParts"
+    ).textContent =
+        parts;
+}
+
+
+// =========================================================
+// FORMAT TIME
+// =========================================================
+
+function formatMinutes(
+    minutes
+) {
+
+    if (
+        !minutes ||
+        minutes <= 0
+    ) {
+
+        return "0 মিনিট";
+    }
+
+
+    const totalSeconds =
+        Math.round(
+            minutes * 60
+        );
+
+
+    const mins =
+        Math.floor(
+            totalSeconds / 60
+        );
+
+
+    const seconds =
+        totalSeconds % 60;
+
+
+    if (
+        seconds === 0
+    ) {
+
+        return `${mins} মিনিট`;
+    }
+
+
+    return `${mins} মিনিট ${seconds} সেকেন্ড`;
+}
+
+
+// =========================================================
+// GENERATE VOICES
+// =========================================================
+
+async function generateVoices() {
+
+    hideError();
+
+
+    const generateBtn =
+        document.getElementById(
+            "generateBtn"
+        );
+
+
+    const text =
+        document.getElementById(
+            "textInput"
+        ).value.trim();
+
+
+    const model =
+        document.getElementById(
+            "modelSelect"
+        ).value;
+
+
+    const voice =
+        document.getElementById(
+            "voiceModel"
+        ).value;
+
+
+    const temperature =
+        parseFloat(
+            document.getElementById(
+                "temperature"
+            ).value
+        );
+
+
+    // =====================================================
+    // API KEYS
+    // =====================================================
+
+    const keyInputs =
+        document.querySelectorAll(
+            ".api-key-input"
+        );
+
+
+    const apiKeys =
+        Array.from(
+            keyInputs
+        )
+        .map(
+            input =>
+                input.value.trim()
+        )
+        .filter(
+            key => key.length > 0
+        );
+
+
+    // =====================================================
+    // VALIDATION
+    // =====================================================
+
+    if (
+        apiKeys.length === 0
+    ) {
+
+        showError(
+            "কমপক্ষে একটি Gemini API Key দিন।"
+        );
+
+        return;
+    }
+
+
+    if (!model) {
+
+        showError(
+            "একটি Gemini TTS Model নির্বাচন করুন।"
+        );
+
+        return;
+    }
+
+
+    if (!voice) {
+
+        showError(
+            "একটি Voice নির্বাচন করুন।"
+        );
+
+        return;
+    }
+
+
+    if (!text) {
+
+        showError(
+            "Text box-এ আপনার script দিন।"
+        );
+
+        return;
+    }
+
+
+    // =====================================================
+    // UI
+    // =====================================================
+
+    generateBtn.disabled =
+        true;
+
+
+    generateBtn.textContent =
+        "⏳ Generating...";
+
+
+    document
+        .getElementById(
+            "progressSection"
+        )
+        .classList.remove(
+            "hidden"
+        );
+
+
+    document
+        .getElementById(
+            "voicesSection"
+        )
+        .classList.add(
+            "hidden"
+        );
+
+
+    document
+        .getElementById(
+            "mergedSection"
+        )
+        .classList.add(
+            "hidden"
+        );
+
+
+    setProgress(
+        0,
+        0,
+        0
+    );
+
+
+    try {
+
+        // =================================================
+        // REQUEST
+        // =================================================
+
+        const response =
+            await fetch(
+                `${API_BASE_URL}/api/generate`,
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        api_keys:
+                            apiKeys,
+
+                        text:
+                            text,
+
+                        model:
+                            model,
+
+                        voice:
+                            voice,
+
+                        temperature:
+                            temperature
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.error ||
+                "Voice generation failed."
+            );
+        }
+
+
+        // =================================================
+        // JOB ID
+        // =================================================
+
+        currentJobId =
+            data.job_id;
+
+
+        // =================================================
+        // DISPLAY
+        // =================================================
+
+        displayGeneratedVoices(
+            data.parts || []
+        );
+
+
+        setProgress(
+            data.parts?.length || 0,
+            data.parts?.length || 0,
+            data.parts?.length || 0
+        );
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        showError(
+            error.message ||
+            "Voice generation failed."
+        );
+
+    }
+
+    finally {
+
+        generateBtn.disabled =
+            false;
+
+
+        generateBtn.textContent =
+            "🎙️ Generate Voices";
+    }
+}
+
+
+// =========================================================
+// DISPLAY GENERATED VOICES
+// =========================================================
+
+function displayGeneratedVoices(
+    parts
+) {
+
+    const section =
+        document.getElementById(
+            "voicesSection"
+        );
+
+
+    const container =
+        document.getElementById(
+            "voicesContainer"
+        );
+
+
+    const count =
+        document.getElementById(
+            "generatedCount"
+        );
+
+
+    container.innerHTML =
+        "";
+
+
+    if (
+        !parts ||
+        parts.length === 0
+    ) {
+
+        section.classList.add(
+            "hidden"
+        );
+
+        return;
+    }
+
+
+    section.classList.remove(
+        "hidden"
+    );
+
+
+    count.textContent =
+        `${parts.length} Parts`;
+
+
+    parts.forEach(
+        (part, index) => {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "voice-card";
+
+
+            // =================================================
+            // AUDIO DATA
+            // =================================================
+
+            let audioUrl =
+                "";
+
+
+            if (
+                part.audio_base64
+            ) {
+
+                audioUrl =
+                    `data:${part.mime_type || "audio/wav"};base64,${part.audio_base64}`;
+            }
+
+
+            else if (
+                part.audio_url
+            ) {
+
+                audioUrl =
+                    part.audio_url;
+            }
+
+
+            // =================================================
+            // CARD
+            // =================================================
+
+            card.innerHTML = `
+
+                <div class="voice-card-header">
+
+                    <strong>
+                        🎧 Part ${part.part || index + 1}
+                    </strong>
+
+                    <span>
+                        API Key ${part.api_key_used || "-"}
+                    </span>
+
+                </div>
+
+
+                <div class="voice-text">
+
+                    ${escapeHtml(
+                        part.text || ""
+                    )}
+
+                </div>
+
+
+                ${
+                    audioUrl
+                    ?
+                    `
+
+                    <audio
+                        controls
+                        preload="metadata"
+                        src="${audioUrl}"
+                    ></audio>
+
+
+                    <a
+                        class="download-btn"
+                        href="${audioUrl}"
+                        download="voice-part-${part.part || index + 1}.wav"
+                    >
+                        ⬇ Download Part ${part.part || index + 1}
+                    </a>
+
+                    `
+                    :
+                    `
+                    <p>
+                        Audio পাওয়া যায়নি।
+                    </p>
+                    `
+                }
+
+            `;
+
+
+            container.appendChild(
+                card
+            );
+        }
+    );
+}
+
+
+// =========================================================
+// MERGE ALL
+// =========================================================
+
+async function mergeVoices() {
+
+    hideError();
+
+
+    if (!currentJobId) {
+
+        showError(
+            "Merge করার জন্য কোনো completed job পাওয়া যায়নি।"
+        );
+
+        return;
+    }
+
+
+    const mergeBtn =
+        document.getElementById(
+            "mergeBtn"
+        );
+
+
+    mergeBtn.disabled =
+        true;
+
+
+    mergeBtn.textContent =
+        "⏳ Merging...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_BASE_URL}/api/merge`,
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        job_id:
+                            currentJobId
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.error ||
+                "Merge failed."
+            );
+        }
+
+
+        if (
+            !data.audio_base64
+        ) {
+
+            throw new Error(
+                "Merged audio পাওয়া যায়নি।"
+            );
+        }
+
+
+        const audioUrl =
+            `data:${data.mime_type || "audio/wav"};base64,${data.audio_base64}`;
+
+
+        document.getElementById(
+            "mergedAudio"
+        ).src =
+            audioUrl;
+
+
+        const download =
+            document.getElementById(
+                "mergedDownload"
+            );
+
+
+        download.href =
+            audioUrl;
+
+
+        document
+            .getElementById(
+                "mergedSection"
+            )
+            .classList.remove(
+                "hidden"
+            );
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        showError(
+            error.message ||
+            "Merge failed."
+        );
+
+    }
+
+    finally {
+
+        mergeBtn.disabled =
+            false;
+
+
+        mergeBtn.textContent =
+            "🔗 Merge All Voices";
+    }
+}
+
+
+// =========================================================
+// PROGRESS
+// =========================================================
+
+function setProgress(
+    current,
+    total,
+    apiKey
+) {
+
+    const percent =
+        total > 0
+            ? Math.min(
+                100,
+                Math.round(
+                    (current / total) * 100
+                )
+            )
+            : 0;
+
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        `${percent}%`;
+
+
+    document.getElementById(
+        "progressText"
+    ).textContent =
+        `${percent}%`;
+
+
+    document.getElementById(
+        "currentPart"
+    ).textContent =
+        `Part ${current} / ${total}`;
+
+
+    document.getElementById(
+        "currentApiKey"
+    ).textContent =
+        apiKey
+            ? `API Key ${apiKey}`
+            : "API Key -";
+}
+
+
+// =========================================================
+// ERROR
+// =========================================================
+
+function showError(
+    message
+) {
+
+    const box =
+        document.getElementById(
+            "errorBox"
+        );
+
+
+    document.getElementById(
+        "errorText"
+    ).textContent =
+        message;
+
+
+    box.classList.remove(
+        "hidden"
+    );
+}
+
+
+function hideError() {
+
+    document
+        .getElementById(
+            "errorBox"
+        )
+        .classList.add(
+            "hidden"
+        );
+}
+
+
+// =========================================================
+// ESCAPE HTML
+// =========================================================
+
+function escapeHtml(
+    value
+) {
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+}
+
+</script>
 
 </body>
 </html>
