@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Voice Generator</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- ================= HEADER ================= -->
+        <header class="app-header">
+            <div>
+                <h1>AI Voice Generator</h1>
+                <p>Generate long-form voice from your text</p>
+            </div>
+
+            <div class="status-indicator">
+                <span class="status-dot"></span>
+                <span>Ready</span>
+            </div>
+        </header>
+
+
+        <!-- ================= API KEYS ================= -->
+        <section class="card">
+
+            <div class="section-title">
+                <h2>API Keys</h2>
+                <p>Add multiple API keys for automatic fallback.</p>
+            </div>
+
+            <div id="apiKeysContainer">
+
+                <div class="api-key-row">
+                    <label>API Key 1</label>
+
+                    <div class="input-with-button">
+                        <input
+                            type="password"
+                            class="api-key-input"
+                            placeholder="Enter API Key 1"
+                            autocomplete="off"
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-key-btn"
+                            onclick="toggleApiKey(this)"
+                        >
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class="api-key-row">
+                    <label>API Key 2</label>
+
+                    <div class="input-with-button">
+                        <input
+                            type="password"
+                            class="api-key-input"
+                            placeholder="Enter API Key 2"
+                            autocomplete="off"
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-key-btn"
+                            onclick="toggleApiKey(this)"
+                        >
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class="api-key-row">
+                    <label>API Key 3</label>
+
+                    <div class="input-with-button">
+                        <input
+                            type="password"
+                            class="api-key-input"
+                            placeholder="Enter API Key 3"
+                            autocomplete="off"
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-key-btn"
+                            onclick="toggleApiKey(this)"
+                        >
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="secondary-btn"
+                onclick="addApiKey()"
+            >
+                + Add API Key
+            </button>
+
+        </section>
+
+
+
+        <!-- ================= VOICE SETTINGS ================= -->
+        <section class="card">
+
+            <div class="section-title">
+                <h2>Voice Settings</h2>
+                <p>Choose the voice model and generation settings.</p>
+            </div>
+
+
+            <div class="form-grid">
+
+                <!-- Voice Model -->
+                <div class="form-group">
+
+                    <label for="voiceModel">
+                        Voice Model
+                    </label>
+
+                    <select id="voiceModel">
+
+                        <option value="">
+                            Select Voice Model
+                        </option>
+
+                        <!-- Backend will provide models later -->
+
+                    </select>
+
+                </div>
+
+
+                <!-- Temperature -->
+                <div class="form-group">
+
+                    <label for="temperature">
+                        Temperature
+                        <span id="temperatureValue">0.7</span>
+                    </label>
+
+                    <input
+                        type="range"
+                        id="temperature"
+                        min="0"
+                        max="1"
+                        step="0.1"
+                        value="0.7"
+                        oninput="updateTemperature(this.value)"
+                    >
+
+                    <div class="range-labels">
+                        <span>0</span>
+                        <span>1</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= TEXT INPUT ================= -->
+        <section class="card">
+
+            <div class="section-title">
+
+                <div>
+                    <h2>Your Text</h2>
+                    <p>
+                        Enter any length of text. The system will automatically
+                        divide it into approximately 2.5-minute sections.
+                    </p>
+                </div>
+
+                <div class="character-counter">
+                    <span id="characterCount">0</span>
+                    characters
+                </div>
+
+            </div>
+
+
+            <textarea
+                id="textInput"
+                placeholder="Paste or type your text here..."
+                oninput="updateCharacterCount()"
+            ></textarea>
+
+
+            <div class="text-info">
+
+                <span>
+                    Estimated duration:
+                    <strong id="estimatedDuration">0 min</strong>
+                </span>
+
+                <span>
+                    Estimated parts:
+                    <strong id="estimatedParts">0</strong>
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= GENERATE ================= -->
+        <section class="generate-section">
+
+            <button
+                type="button"
+                id="generateButton"
+                class="generate-btn"
+                onclick="generateVoices()"
+            >
+                <span id="generateButtonText">
+                    Generate Voices
+                </span>
+
+                <span
+                    id="generateLoader"
+                    class="loader hidden"
+                ></span>
+            </button>
+
+        </section>
+
+
+
+        <!-- ================= GENERATION PROGRESS ================= -->
+        <section
+            id="progressSection"
+            class="card hidden"
+        >
+
+            <div class="section-title">
+
+                <div>
+                    <h2>Generation Progress</h2>
+                    <p id="progressText">
+                        Preparing...
+                    </p>
+                </div>
+
+                <strong id="progressPercentage">
+                    0%
+                </strong>
+
+            </div>
+
+
+            <div class="progress-bar">
+
+                <div
+                    id="progressBar"
+                    class="progress-fill"
+                    style="width: 0%"
+                ></div>
+
+            </div>
+
+
+            <div class="generation-status">
+
+                <span>
+                    Current Part:
+                    <strong id="currentPart">
+                        0 / 0
+                    </strong>
+                </span>
+
+                <span>
+                    API Key:
+                    <strong id="currentApiKey">
+                        -
+                    </strong>
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= GENERATED VOICES ================= -->
+        <section
+            id="voicesSection"
+            class="card hidden"
+        >
+
+            <div class="section-title">
+
+                <div>
+                    <h2>Generated Voices</h2>
+                    <p>
+                        Listen to or download each generated voice separately.
+                    </p>
+                </div>
+
+                <span id="completedCount">
+                    0 parts
+                </span>
+
+            </div>
+
+
+            <!-- Voice cards will be inserted here -->
+            <div id="voiceList"></div>
+
+
+            <!-- ================= MERGE ================= -->
+            <div
+                id="mergeSection"
+                class="merge-section hidden"
+            >
+
+                <div class="merge-info">
+
+                    <h3>Combine All Voices</h3>
+
+                    <p>
+                        Merge all generated parts into one complete audio file.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="mergeButton"
+                    class="merge-btn"
+                    onclick="mergeVoices()"
+                >
+                    Merge All Voices
+                </button>
+
+            </div>
+
+
+            <!-- ================= MERGED AUDIO ================= -->
+            <div
+                id="mergedAudioSection"
+                class="merged-audio hidden"
+            >
+
+                <h3>Complete Voice</h3>
+
+                <audio
+                    id="mergedAudioPlayer"
+                    controls
+                ></audio>
+
+
+                <a
+                    id="mergedDownloadButton"
+                    class="download-btn"
+                    href="#"
+                    download="complete_voice.wav"
+                >
+                    Download Complete Voice
+                </a>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= ERROR ================= -->
+        <div
+            id="errorMessage"
+            class="error-message hidden"
+        ></div>
+
+
+        <!-- ================= FOOTER ================= -->
+        <footer>
+
+            <p>
+                AI Voice Generator
+            </p>
+
+        </footer>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         JAVASCRIPT
+         ================================================== -->
+
+    <script>
+
+        /*
+         * ================================================
+         * CONFIGURATION
+         * ================================================
+         */
+
+        /*
+         * Later this will point to your Python backend.
+         *
+         * Example:
+         *
+         * const API_BASE_URL =
+         *     "https://your-python-server.com";
+         *
+         */
+
+        const API_BASE_URL = "";
+
+
+
+        /*
+         * ================================================
+         * API KEY MANAGEMENT
+         * ================================================
+         */
+
+        let apiKeyCount = 3;
+
+
+        function addApiKey() {
+
+            apiKeyCount++;
+
+            const container =
+                document.getElementById("apiKeysContainer");
+
+
+            const row =
+                document.createElement("div");
+
+            row.className = "api-key-row";
+
+
+            row.innerHTML = `
+
+                <label>API Key ${apiKeyCount}</label>
+
+                <div class="input-with-button">
+
+                    <input
+                        type="password"
+                        class="api-key-input"
+                        placeholder="Enter API Key ${apiKeyCount}"
+                        autocomplete="off"
+                    >
+
+                    <button
+                        type="button"
+                        class="toggle-key-btn"
+                        onclick="toggleApiKey(this)"
+                    >
+                        Show
+                    </button>
+
+                </div>
+
+            `;
+
+
+            container.appendChild(row);
+
+        }
+
+
+
+        function toggleApiKey(button) {
+
+            const input =
+                button.previousElementSibling;
+
+
+            if (input.type === "password") {
+
+                input.type = "text";
+
+                button.textContent = "Hide";
+
+            } else {
+
+                input.type = "password";
+
+                button.textContent = "Show";
+
+            }
+
+        }
+
+
+
+        function getApiKeys() {
+
+            const inputs =
+                document.querySelectorAll(".api-key-input");
+
+
+            const keys = [];
+
+
+            inputs.forEach(input => {
+
+                const value =
+                    input.value.trim();
+
+                if (value) {
+                    keys.push(value);
+                }
+
+            });
+
+
+            return keys;
+
+        }
+
+
+
+        /*
+         * ================================================
+         * TEMPERATURE
+         * ================================================
+         */
+
+        function updateTemperature(value) {
+
+            document.getElementById(
+                "temperatureValue"
+            ).textContent = value;
+
+        }
+
+
+
+        /*
+         * ================================================
+         * TEXT INFORMATION
+         * ================================================
+         */
+
+        function updateCharacterCount() {
+
+            const text =
+                document.getElementById(
+                    "textInput"
+                ).value;
+
+
+            const characters =
+                text.length;
+
+
+            document.getElementById(
+                "characterCount"
+            ).textContent = characters;
+
+
+            /*
+             * Rough estimation.
+             *
+             * This is only a frontend estimate.
+             * The Python backend will perform the
+             * actual intelligent text splitting.
+             */
+
+            const words =
+                text.trim()
+                    ? text.trim().split(/\s+/).length
+                    : 0;
+
+
+            /*
+             * Approximate speaking speed:
+             * 130 words/minute
+             */
+
+            const minutes =
+                words / 130;
+
+
+            document.getElementById(
+                "estimatedDuration"
+            ).textContent =
+                minutes > 0
+                    ? minutes.toFixed(1) + " min"
+                    : "0 min";
+
+
+            const parts =
+                minutes > 0
+                    ? Math.ceil(minutes / 2.5)
+                    : 0;
+
+
+            document.getElementById(
+                "estimatedParts"
+            ).textContent =
+                parts;
+
+        }
+
+
+
+        /*
+         * ================================================
+         * UI HELPERS
+         * ================================================
+         */
+
+        function showElement(id) {
+
+            document
+                .getElementById(id)
+                .classList.remove("hidden");
+
+        }
+
+
+
+        function hideElement(id) {
+
+            document
+                .getElementById(id)
+                .classList.add("hidden");
+
+        }
+
+
+
+        function showError(message) {
+
+            const error =
+                document.getElementById(
+                    "errorMessage"
+                );
+
+
+            error.textContent = message;
+
+            error.classList.remove("hidden");
+
+        }
+
+
+
+        function clearError() {
+
+            hideElement("errorMessage");
+
+        }
+
+
+
+        function setProgress(
+            percentage,
+            current,
+            total,
+            apiKey
+        ) {
+
+            document.getElementById(
+                "progressBar"
+            ).style.width =
+                percentage + "%";
+
+
+            document.getElementById(
+                "progressPercentage"
+            ).textContent =
+                percentage + "%";
+
+
+            document.getElementById(
+                "currentPart"
+            ).textContent =
+                `${current} / ${total}`;
+
+
+            document.getElementById(
+                "currentApiKey"
+            ).textContent =
+                apiKey || "-";
+
+        }
+
+
+
+        /*
+         * ================================================
+         * GENERATE VOICES
+         * ================================================
+         */
+
+        async function generateVoices() {
+
+            clearError();
+
+
+            const apiKeys =
+                getApiKeys();
+
+
+            const model =
+                document.getElementById(
+                    "voiceModel"
+                ).value;
+
+
+            const temperature =
+                parseFloat(
+                    document.getElementById(
+                        "temperature"
+                    ).value
+                );
+
+
+            const text =
+                document.getElementById(
+                    "textInput"
+                ).value.trim();
+
+
+
+            /*
+             * Basic validation
+             */
+
+            if (apiKeys.length === 0) {
+
+                showError(
+                    "Please enter at least one API key."
+                );
+
+                return;
+
+            }
+
+
+            if (!model) {
+
+                showError(
+                    "Please select a voice model."
+                );
+
+                return;
+
+            }
+
+
+            if (!text) {
+
+                showError(
+                    "Please enter some text."
+                );
+
+                return;
+
+            }
+
+
+
+            /*
+             * UI state
+             */
+
+            const button =
+                document.getElementById(
+                    "generateButton"
+                );
+
+
+            button.disabled = true;
+
+
+            document.getElementById(
+                "generateButtonText"
+            ).textContent =
+                "Generating...";
+
+
+            document
+                .getElementById(
+                    "generateLoader"
+                )
+                .classList.remove(
+                    "hidden"
+                );
+
+
+            showElement("progressSection");
+
+
+            hideElement("voicesSection");
+
+
+            /*
+             * Clear previous voices
+             */
+
+            document.getElementById(
+                "voiceList"
+            ).innerHTML = "";
+
+
+
+            try {
+
+                /*
+                 * Send everything to Python backend.
+                 *
+                 * The backend will:
+                 *
+                 * 1. Split text
+                 * 2. Generate each part
+                 * 3. Automatically switch API keys
+                 * 4. Return audio data
+                 */
+
+                const response =
+                    await fetch(
+                        API_BASE_URL +
+                        "/api/generate",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    api_keys:
+                                        apiKeys,
+
+                                    model:
+                                        model,
+
+                                    temperature:
+                                        temperature,
+
+                                    text:
+                                        text
+
+                                })
+
+                        }
+                    );
+
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Voice generation failed."
+                    );
+
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                /*
+                 * Backend response will contain
+                 * generated audio information.
+                 */
+
+                if (
+                    data.parts &&
+                    Array.isArray(data.parts)
+                ) {
+
+                    displayGeneratedVoices(
+                        data.parts
+                    );
+
+                }
+
+
+                showElement(
+                    "voicesSection"
+                );
+
+
+                setProgress(
+                    100,
+                    data.parts
+                        ? data.parts.length
+                        : 0,
+                    data.parts
+                        ? data.parts.length
+                        : 0,
+                    "-"
+                );
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                showError(
+                    error.message ||
+                    "Something went wrong while generating voices."
+                );
+
+            } finally {
+
+                button.disabled = false;
+
+
+                document.getElementById(
+                    "generateButtonText"
+                ).textContent =
+                    "Generate Voices";
+
+
+                document
+                    .getElementById(
+                        "generateLoader"
+                    )
+                    .classList.add(
+                        "hidden"
+                    );
+
+            }
+
+        }
+
+
+
+        /*
+         * ================================================
+         * DISPLAY GENERATED VOICES
+         * ================================================
+         */
+
+        function displayGeneratedVoices(parts) {
+
+            const list =
+                document.getElementById(
+                    "voiceList"
+                );
+
+
+            list.innerHTML = "";
+
+
+            parts.forEach(
+                (part, index) => {
+
+                    const card =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    card.className =
+                        "voice-card";
+
+
+                    /*
+                     * Backend can return either:
+                     *
+                     * audio_url
+                     *
+                     * or
+                     *
+                     * audio_base64
+                     *
+                     */
+
+
+                    let audioURL =
+                        part.audio_url ||
+                        "";
+
+
+                    if (
+                        !audioURL &&
+                        part.audio_base64
+                    ) {
+
+                        audioURL =
+                            "data:" +
+                            (
+                                part.mime_type ||
+                                "audio/wav"
+                            ) +
+                            ";base64," +
+                            part.audio_base64;
+
+                    }
+
+
+
+                    card.innerHTML = `
+
+                        <div class="voice-card-header">
+
+                            <div>
+
+                                <h3>
+                                    Part ${index + 1}
+                                </h3>
+
+                                <span>
+                                    ${
+                                        part.duration
+                                            ? part.duration
+                                            : "Audio generated"
+                                    }
+                                </span>
+
+                            </div>
+
+                            <span class="voice-status">
+                                ✓ Ready
+                            </span>
+
+                        </div>
+
+
+                        <audio
+                            controls
+                            src="${audioURL}"
+                        ></audio>
+
+
+                        <div class="voice-actions">
+
+                            <a
+                                class="download-btn"
+                                href="${audioURL}"
+                                download="voice_part_${String(
+                                    index + 1
+                                ).padStart(2, "0")}.wav"
+                            >
+                                Download
+                            </a>
+
+                        </div>
+
+                    `;
+
+
+                    list.appendChild(card);
+
+                }
+            );
+
+
+            document.getElementById(
+                "completedCount"
+            ).textContent =
+                `${parts.length} parts`;
+
+
+            /*
+             * Show merge button
+             * if there is more than one part.
+             */
+
+            if (parts.length > 1) {
+
+                showElement(
+                    "mergeSection"
+                );
+
+            } else {
+
+                hideElement(
+                    "mergeSection"
+                );
+
+            }
+
+        }
+
+
+
+        /*
+         * ================================================
+         * MERGE VOICES
+         * ================================================
+         */
+
+        async function mergeVoices() {
+
+            clearError();
+
+
+            const button =
+                document.getElementById(
+                    "mergeButton"
+                );
+
+
+            button.disabled = true;
+
+
+            button.textContent =
+                "Merging...";
+
+
+            try {
+
+                /*
+                 * Later the Python backend will
+                 * receive the generated audio
+                 * information and merge them.
+                 */
+
+                const response =
+                    await fetch(
+                        API_BASE_URL +
+                        "/api/merge",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            }
+
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Audio merge failed."
+                    );
+
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                if (!data.audio_url) {
+
+                    throw new Error(
+                        "Merged audio was not returned."
+                    );
+
+                }
+
+
+                document.getElementById(
+                    "mergedAudioPlayer"
+                ).src =
+                    data.audio_url;
+
+
+                document.getElementById(
+                    "mergedDownloadButton"
+                ).href =
+                    data.audio_url;
+
+
+                showElement(
+                    "mergedAudioSection"
+                );
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                showError(
+                    error.message ||
+                    "Unable to merge audio."
+                );
+
+            } finally {
+
+                button.disabled = false;
+
+                button.textContent =
+                    "Merge All Voices";
+
+            }
+
+        }
+
+
+
+        /*
+         * ================================================
+         * LOAD VOICE MODELS
+         * ================================================
+         */
+
+        async function loadVoiceModels() {
+
+            /*
+             * The Python backend will later
+             * provide the available models.
+             */
+
+            try {
+
+                const response =
+                    await fetch(
+                        API_BASE_URL +
+                        "/api/models"
+                    );
+
+
+                if (!response.ok) {
+                    return;
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                const select =
+                    document.getElementById(
+                        "voiceModel"
+                    );
+
+
+                select.innerHTML =
+                    '<option value="">Select Voice Model</option>';
+
+
+                if (
+                    data.models &&
+                    Array.isArray(data.models)
+                ) {
+
+                    data.models.forEach(
+                        model => {
+
+                            const option =
+                                document.createElement(
+                                    "option"
+                                );
+
+
+                            option.value =
+                                model.id ||
+                                model;
+
+
+                            option.textContent =
+                                model.name ||
+                                model.id ||
+                                model;
+
+
+                            select.appendChild(
+                                option
+                            );
+
+                        }
+                    );
+
+                }
+
+            } catch (error) {
+
+                console.log(
+                    "Backend not connected yet."
+                );
+
+            }
+
+        }
+
+
+
+        /*
+         * ================================================
+         * INITIALIZE
+         * ================================================
+         */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            () => {
+
+                updateCharacterCount();
+
+                loadVoiceModels();
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>
