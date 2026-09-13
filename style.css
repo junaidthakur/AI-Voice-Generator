@@ -1,1237 +1,928 @@
-/* =========================================================
-   AI VOICE GENERATOR
-   style.css
-   ========================================================= */
-
-
-/* =========================================================
-   RESET
-   ========================================================= */
-
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  }
 
+:root {
+--bg: #0b1020;
+--card: #121a2d;
+--card-light: #18223a;
+--border: rgba(255, 255, 255, 0.09);
+--text: #f5f7ff;
+--muted: #9da8c0;
+--primary: #6c63ff;
+--primary-hover: #8179ff;
+--success: #20c997;
+--danger: #ff5d73;
+--shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+}
 
 html {
-    scroll-behavior: smooth;
+scroll-behavior: smooth;
 }
-
 
 body {
-    font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
+min-height: 100vh;
+background:
+radial-gradient(
+circle at top right,
+rgba(108, 99, 255, 0.16),
+transparent 30%
+),
+radial-gradient(
+circle at bottom left,
+rgba(32, 201, 151, 0.08),
+transparent 28%
+),
+var(--bg);
 
-    background:
-        radial-gradient(
-            circle at top left,
-            #1e293b 0,
-            #0f172a 35%,
-            #020617 100%
-        );
+color: var(--text);
 
-    color: #f8fafc;
+font-family:
+    Arial,
+    "Noto Sans Bengali",
+    "Noto Sans",
+    sans-serif;
 
-    min-height: 100vh;
+line-height: 1.5;
 
-    line-height: 1.5;
 }
 
+/* =========================================
+MAIN APP
+========================================= */
 
-/* =========================================================
-   MAIN CONTAINER
-   ========================================================= */
-
-.app-container {
-    width: 100%;
-    max-width: 1050px;
-
-    margin: 0 auto;
-
-    padding: 30px 20px 60px;
+.app {
+width: min(100%, 900px);
+margin: 0 auto;
+padding: 25px 18px 50px;
 }
 
+/* =========================================
+HEADER
+========================================= */
 
-/* =========================================================
-   HEADER
-   ========================================================= */
-
-.app-header {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 20px;
-
-    margin-bottom: 28px;
+.header {
+padding: 25px 5px 30px;
+text-align: center;
 }
 
+.header h1 {
+font-size: clamp(28px, 6vw, 42px);
+font-weight: 800;
+letter-spacing: -0.5px;
 
-.app-header h1 {
-    font-size: 32px;
+background: linear-gradient(
+    90deg,
+    #ffffff,
+    #a9a3ff,
+    #ffffff
+);
 
-    font-weight: 750;
+-webkit-background-clip: text;
+background-clip: text;
+color: transparent;
 
-    letter-spacing: -0.8px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff,
-            #cbd5e1
-        );
-
-    -webkit-background-clip: text;
-    background-clip: text;
-
-    color: transparent;
 }
 
-
-.app-header p {
-    margin-top: 5px;
-
-    color: #94a3b8;
-
-    font-size: 14px;
+.header p {
+margin-top: 7px;
+color: var(--muted);
+font-size: 14px;
 }
 
-
-/* =========================================================
-   STATUS
-   ========================================================= */
-
-.status-indicator {
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    padding: 8px 13px;
-
-    border: 1px solid
-        rgba(148, 163, 184, 0.18);
-
-    border-radius: 999px;
-
-    background:
-        rgba(15, 23, 42, 0.65);
-
-    color: #cbd5e1;
-
-    font-size: 13px;
-
-    white-space: nowrap;
-}
-
-
-.status-dot {
-    width: 8px;
-    height: 8px;
-
-    border-radius: 50%;
-
-    background: #22c55e;
-
-    box-shadow:
-        0 0 10px
-        rgba(34, 197, 94, 0.7);
-}
-
-
-/* =========================================================
-   CARD
-   ========================================================= */
+/* =========================================
+CARD
+========================================= */
 
 .card {
-    background:
-        rgba(15, 23, 42, 0.78);
+background: rgba(18, 26, 45, 0.94);
 
-    border: 1px solid
-        rgba(148, 163, 184, 0.13);
+border: 1px solid var(--border);
 
-    border-radius: 18px;
+border-radius: 18px;
 
-    padding: 24px;
+padding: 22px;
 
-    margin-bottom: 20px;
+margin-bottom: 18px;
 
-    box-shadow:
-        0 18px 45px
-        rgba(0, 0, 0, 0.22);
+box-shadow: var(--shadow);
 
-    backdrop-filter: blur(14px);
+backdrop-filter: blur(12px);
+
 }
 
+/* =========================================
+SECTION TITLE
+========================================= */
 
 .section-title {
-    display: flex;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 12px;
 
-    align-items: flex-start;
-    justify-content: space-between;
+margin-bottom: 15px;
 
-    gap: 20px;
-
-    margin-bottom: 20px;
 }
-
 
 .section-title h2 {
-    font-size: 19px;
-
-    font-weight: 700;
-
-    color: #f8fafc;
+font-size: 19px;
+font-weight: 700;
 }
 
+.small-text {
+font-size: 12px;
+color: var(--success);
 
-.section-title p {
-    margin-top: 4px;
+background: rgba(32, 201, 151, 0.1);
 
-    font-size: 13px;
+padding: 5px 9px;
 
-    color: #94a3b8;
+border-radius: 20px;
 
-    max-width: 650px;
 }
 
+.hint {
+color: var(--muted);
+font-size: 13px;
+margin-bottom: 15px;
+}
 
-/* =========================================================
-   API KEYS
-   ========================================================= */
+/* =========================================
+API KEY
+========================================= */
 
 .api-key-row {
-    margin-bottom: 15px;
+display: flex;
+gap: 8px;
+margin-bottom: 10px;
 }
 
-
-.api-key-row label,
-.form-group label {
-    display: block;
-
-    margin-bottom: 7px;
-
-    color: #cbd5e1;
-
-    font-size: 13px;
-
-    font-weight: 600;
+.api-key-row input {
+flex: 1;
 }
 
-
-.input-with-button {
-    display: flex;
-
-    gap: 8px;
-}
-
-
-.api-key-input,
+input,
 select,
 textarea {
-    width: 100%;
+width: 100%;
 
-    border: 1px solid
-        rgba(148, 163, 184, 0.18);
+border: 1px solid var(--border);
 
-    background:
-        rgba(2, 6, 23, 0.7);
+background: #0d1528;
 
-    color: #f8fafc;
+color: var(--text);
 
-    outline: none;
+border-radius: 11px;
 
-    transition:
-        border-color 0.2s,
-        box-shadow 0.2s,
-        background 0.2s;
+outline: none;
+
+transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    background 0.2s;
+
 }
 
-
-.api-key-input {
-    height: 46px;
-
-    padding: 0 14px;
-
-    border-radius: 10px;
-
-    font-size: 14px;
+input,
+select {
+height: 48px;
+padding: 0 14px;
 }
 
-
-.api-key-input::placeholder {
-    color: #64748b;
-}
-
-
-.api-key-input:focus,
+input:focus,
 select:focus,
 textarea:focus {
-    border-color:
-        rgba(99, 102, 241, 0.75);
+border-color: var(--primary);
 
-    box-shadow:
-        0 0 0 3px
-        rgba(99, 102, 241, 0.12);
+box-shadow:
+    0 0 0 3px
+    rgba(108, 99, 255, 0.13);
 
-    background:
-        rgba(2, 6, 23, 0.9);
+background: #101a31;
+
 }
 
+.show-key,
+.remove-key {
+width: 48px;
+min-width: 48px;
 
-.toggle-key-btn {
-    min-width: 70px;
+border: 1px solid var(--border);
 
-    border: 1px solid
-        rgba(148, 163, 184, 0.17);
+border-radius: 11px;
 
-    border-radius: 10px;
+background: #18223a;
 
-    background:
-        rgba(30, 41, 59, 0.8);
+color: white;
 
-    color: #cbd5e1;
+cursor: pointer;
 
-    cursor: pointer;
+font-size: 17px;
 
-    transition: 0.2s;
+transition: 0.2s;
+
 }
 
-
-.toggle-key-btn:hover {
-    background:
-        rgba(51, 65, 85, 0.95);
-
-    color: #ffffff;
+.show-key:hover {
+background: #242f4c;
 }
 
+.remove-key {
+color: #ff7184;
+}
 
-/* =========================================================
-   BUTTONS
-   ========================================================= */
+.remove-key:hover {
+background: rgba(255, 93, 115, 0.12);
+}
+
+/* =========================================
+BUTTONS
+========================================= */
+
+button,
+.download-btn {
+font-family: inherit;
+}
 
 button {
-    font-family: inherit;
+border: none;
 }
-
 
 .secondary-btn {
-    margin-top: 2px;
+margin-top: 5px;
 
-    padding: 10px 15px;
+padding: 11px 15px;
 
-    border: 1px solid
-        rgba(99, 102, 241, 0.35);
+border-radius: 10px;
 
-    border-radius: 10px;
+background: #1b2741;
 
-    background:
-        rgba(79, 70, 229, 0.08);
+color: #dfe4ff;
 
-    color: #a5b4fc;
+border: 1px solid var(--border);
 
-    font-size: 13px;
+cursor: pointer;
 
-    font-weight: 600;
+font-size: 13px;
 
-    cursor: pointer;
+transition: 0.2s;
 
-    transition:
-        background 0.2s,
-        border-color 0.2s,
-        transform 0.2s;
 }
-
 
 .secondary-btn:hover {
-    background:
-        rgba(79, 70, 229, 0.16);
-
-    border-color:
-        rgba(99, 102, 241, 0.6);
-
-    transform: translateY(-1px);
+background: #263452;
 }
 
+/* =========================================
+GRID
+========================================= */
 
-/* =========================================================
-   FORM GRID
-   ========================================================= */
+.grid {
+display: grid;
 
-.form-grid {
-    display: grid;
+grid-template-columns:
+    repeat(2, minmax(0, 1fr));
 
-    grid-template-columns:
-        minmax(0, 1fr)
-        minmax(0, 1fr);
+gap: 15px;
 
-    gap: 20px;
 }
 
-
-.form-group {
-    min-width: 0;
+.field {
+margin-bottom: 16px;
 }
 
+.field label {
+display: block;
 
+color: #dce2f4;
+
+font-size: 13px;
+
+font-weight: 600;
+
+margin-bottom: 7px;
+
+}
+
+/* =========================================
+TEMPERATURE
+========================================= */
+
+.temperature-field {
+margin-top: 5px;
+}
+
+.label-line {
+display: flex;
+
+justify-content: space-between;
+
+align-items: center;
+
+margin-bottom: 7px;
+
+}
+
+.label-line span {
+color: #a9a3ff;
+
+font-weight: 700;
+
+font-size: 14px;
+
+}
+
+input[type="range"] {
+height: 5px;
+
+padding: 0;
+
+appearance: none;
+
+background: #28334c;
+
+border: none;
+
+border-radius: 10px;
+
+cursor: pointer;
+
+}
+
+input[type="range"]::-webkit-slider-thumb {
+appearance: none;
+
+width: 19px;
+height: 19px;
+
+border-radius: 50%;
+
+background: var(--primary);
+
+border: 3px solid #fff;
+
+cursor: pointer;
+
+box-shadow:
+    0 2px 8px
+    rgba(108, 99, 255, 0.5);
+
+}
+
+input[type="range"]::-moz-range-thumb {
+width: 17px;
+height: 17px;
+
+border-radius: 50%;
+
+background: var(--primary);
+
+border: 3px solid #fff;
+
+cursor: pointer;
+
+}
+
+/* =========================================
+TEXTAREA
+========================================= */
+
+textarea {
+min-height: 330px;
+
+resize: vertical;
+
+padding: 16px;
+
+font-size: 15px;
+
+line-height: 1.75;
+
+}
+
+textarea::placeholder {
+color: #68748e;
+}
+
+.text-info {
+display: flex;
+
+justify-content: space-between;
+
+gap: 10px;
+
+margin-top: 9px;
+
+color: var(--muted);
+
+font-size: 12px;
+
+}
+
+/* =========================================
+ACTION
+========================================= */
+
+.action-section {
+margin: 20px 0;
+}
+
+.primary-btn,
+.merge-btn {
+width: 100%;
+
+min-height: 55px;
+
+border-radius: 14px;
+
+color: white;
+
+font-size: 16px;
+
+font-weight: 700;
+
+cursor: pointer;
+
+transition:
+    transform 0.2s,
+    opacity 0.2s,
+    box-shadow 0.2s;
+
+}
+
+.primary-btn {
+background:
+linear-gradient(
+135deg,
+#655cff,
+#8c5cff
+);
+
+box-shadow:
+    0 10px 30px
+    rgba(108, 99, 255, 0.25);
+
+}
+
+.primary-btn:hover,
+.merge-btn:hover {
+transform: translateY(-2px);
+}
+
+.primary-btn:active,
+.merge-btn:active {
+transform: translateY(0);
+}
+
+.primary-btn:disabled,
+.merge-btn:disabled {
+opacity: 0.55;
+
+cursor: not-allowed;
+
+transform: none;
+
+}
+
+/* =========================================
+PROGRESS
+========================================= */
+
+.progress-card {
+animation: fadeIn 0.3s ease;
+}
+
+.progress-bar {
+width: 100%;
+
+height: 10px;
+
+overflow: hidden;
+
+border-radius: 20px;
+
+background: #252f47;
+
+margin: 12px 0;
+
+}
+
+.progress-fill {
+height: 100%;
+
+width: 0%;
+
+border-radius: inherit;
+
+background:
+    linear-gradient(
+        90deg,
+        #655cff,
+        #a76bff
+    );
+
+transition: width 0.3s ease;
+
+}
+
+#progressMessage {
+color: var(--muted);
+
+font-size: 13px;
+
+}
+
+/* =========================================
+ERROR
+========================================= */
+
+.error-box {
+background:
+rgba(255, 93, 115, 0.09);
+
+border:
+    1px solid
+    rgba(255, 93, 115, 0.25);
+
+color: #ff9aaa;
+
+border-radius: 13px;
+
+padding: 14px 16px;
+
+margin-bottom: 18px;
+
+font-size: 14px;
+
+line-height: 1.6;
+
+animation: fadeIn 0.25s ease;
+
+}
+
+/* =========================================
+AUDIO PART
+========================================= */
+
+.audio-part {
+background: #0d1528;
+
+border: 1px solid var(--border);
+
+border-radius: 15px;
+
+padding: 16px;
+
+margin-bottom: 13px;
+
+animation: fadeIn 0.3s ease;
+
+}
+
+.audio-part-title {
+margin-bottom: 7px;
+
+color: #e9ecff;
+
+font-size: 15px;
+
+}
+
+.audio-preview {
+color: var(--muted);
+
+font-size: 12px;
+
+line-height: 1.6;
+
+margin-bottom: 12px;
+
+}
+
+.audio-part audio {
+width: 100%;
+
+height: 42px;
+
+margin-bottom: 11px;
+
+}
+
+.audio-actions {
+display: flex;
+
+justify-content: flex-end;
+
+}
+
+.download-btn {
+display: inline-flex;
+
+align-items: center;
+
+justify-content: center;
+
+min-height: 40px;
+
+padding: 0 15px;
+
+border-radius: 9px;
+
+background: #1d2a45;
+
+color: #e8ebff;
+
+text-decoration: none;
+
+font-size: 13px;
+
+font-weight: 600;
+
+border: 1px solid var(--border);
+
+transition: 0.2s;
+
+}
+
+.download-btn:hover {
+background: #293958;
+
+transform: translateY(-1px);
+
+}
+
+/* =========================================
+MERGE
+========================================= */
+
+.merge-section {
+margin-top: 22px;
+
+padding-top: 20px;
+
+border-top: 1px solid var(--border);
+
+}
+
+.merge-btn {
+background:
+linear-gradient(
+135deg,
+#16a085,
+#20c997
+);
+
+box-shadow:
+    0 10px 25px
+    rgba(32, 201, 151, 0.18);
+
+}
+
+/* =========================================
+MERGED RESULT
+========================================= */
+
+.merged-result {
+margin-top: 18px;
+
+padding: 18px;
+
+border-radius: 15px;
+
+background:
+    rgba(32, 201, 151, 0.06);
+
+border:
+    1px solid
+    rgba(32, 201, 151, 0.18);
+
+animation: fadeIn 0.3s ease;
+
+}
+
+.merged-result h3 {
+margin-bottom: 13px;
+
+font-size: 17px;
+
+}
+
+.merged-result audio {
+width: 100%;
+
+margin-bottom: 13px;
+
+}
+
+.merged-result .download-btn {
+width: 100%;
+
+background: rgba(32, 201, 151, 0.13);
+
+border-color:
+    rgba(32, 201, 151, 0.25);
+
+}
+
+/* =========================================
+FOOTER
+========================================= */
+
+footer {
+text-align: center;
+
+padding: 15px 0 5px;
+
+color: #77829b;
+
+font-size: 12px;
+
+}
+
+.footer-note {
+margin-top: 5px;
+
+color: #56627b;
+
+font-size: 11px;
+
+}
+
+/* =========================================
+HIDDEN
+========================================= */
+
+.hidden {
+display: none !important;
+}
+
+/* =========================================
+ANIMATION
+========================================= */
+
+@keyframes fadeIn {
+
+from {
+    opacity: 0;
+    transform: translateY(8px);
+}
+
+to {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+}
+
+/* =========================================
+TABLET
+========================================= */
+
+@media (max-width: 700px) {
+
+.app {
+    padding:
+        15px 12px 35px;
+}
+
+.card {
+    padding: 17px;
+
+    border-radius: 15px;
+}
+
+.grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+}
+
+textarea {
+    min-height: 280px;
+}
+
+}
+
+/* =========================================
+MOBILE
+========================================= */
+
+@media (max-width: 500px) {
+
+.app {
+    padding:
+        10px 9px 30px;
+}
+
+.header {
+    padding:
+        18px 4px 22px;
+}
+
+.header h1 {
+    font-size: 28px;
+}
+
+.header p {
+    font-size: 12px;
+}
+
+.card {
+    padding: 15px;
+
+    margin-bottom: 13px;
+}
+
+.section-title {
+    align-items: flex-start;
+}
+
+.section-title h2 {
+    font-size: 17px;
+}
+
+.small-text {
+    font-size: 10px;
+}
+
+.api-key-row {
+    gap: 6px;
+}
+
+.show-key,
+.remove-key {
+    width: 43px;
+    min-width: 43px;
+}
+
+input,
 select {
     height: 46px;
 
-    padding: 0 13px;
-
-    border-radius: 10px;
-
-    font-size: 14px;
-
-    cursor: pointer;
+    font-size: 13px;
 }
-
-
-select option {
-    background: #0f172a;
-
-    color: #ffffff;
-}
-
-
-/* =========================================================
-   TEMPERATURE
-   ========================================================= */
-
-#temperature {
-    width: 100%;
-
-    height: 7px;
-
-    appearance: none;
-
-    -webkit-appearance: none;
-
-    border-radius: 999px;
-
-    outline: none;
-
-    background:
-        #334155;
-
-    cursor: pointer;
-
-    margin-top: 10px;
-}
-
-
-#temperature::-webkit-slider-thumb {
-    appearance: none;
-
-    -webkit-appearance: none;
-
-    width: 20px;
-    height: 20px;
-
-    border-radius: 50%;
-
-    background: #818cf8;
-
-    border: 3px solid #0f172a;
-
-    box-shadow:
-        0 0 0 1px #818cf8;
-
-    cursor: pointer;
-}
-
-
-#temperature::-moz-range-thumb {
-    width: 17px;
-    height: 17px;
-
-    border-radius: 50%;
-
-    background: #818cf8;
-
-    border: 3px solid #0f172a;
-
-    cursor: pointer;
-}
-
-
-#temperatureValue {
-    float: right;
-
-    color: #a5b4fc;
-
-    font-weight: 700;
-}
-
-
-.range-labels {
-    display: flex;
-
-    justify-content: space-between;
-
-    margin-top: 7px;
-
-    color: #64748b;
-
-    font-size: 11px;
-}
-
-
-/* =========================================================
-   TEXT AREA
-   ========================================================= */
 
 textarea {
-    display: block;
+    min-height: 260px;
 
-    min-height: 300px;
-
-    resize: vertical;
-
-    padding: 17px;
-
-    border-radius: 13px;
-
-    font-family: inherit;
-
-    font-size: 15px;
+    font-size: 14px;
 
     line-height: 1.7;
 }
 
-
-textarea::placeholder {
-    color: #64748b;
-}
-
-
 .text-info {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 15px;
-
-    margin-top: 11px;
-
-    color: #64748b;
-
-    font-size: 12px;
-}
-
-
-.text-info strong {
-    color: #cbd5e1;
-}
-
-
-.character-counter {
-    color: #64748b;
-
-    font-size: 12px;
-
-    white-space: nowrap;
-}
-
-
-.character-counter span {
-    color: #cbd5e1;
-
-    font-weight: 700;
-}
-
-
-/* =========================================================
-   GENERATE SECTION
-   ========================================================= */
-
-.generate-section {
-    display: flex;
-
-    justify-content: center;
-
-    margin: 25px 0;
-}
-
-
-.generate-btn {
-    min-width: 230px;
-
-    min-height: 52px;
-
-    padding: 0 26px;
-
-    border: none;
-
-    border-radius: 13px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #6366f1,
-            #8b5cf6
-        );
-
-    color: #ffffff;
-
-    font-size: 15px;
-
-    font-weight: 700;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 10px 30px
-        rgba(99, 102, 241, 0.25);
-
-    transition:
-        transform 0.2s,
-        box-shadow 0.2s,
-        opacity 0.2s;
-}
-
-
-.generate-btn:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 15px 35px
-        rgba(99, 102, 241, 0.35);
-}
-
-
-.generate-btn:active {
-    transform: translateY(0);
-}
-
-
-.generate-btn:disabled {
-    opacity: 0.6;
-
-    cursor: not-allowed;
-
-    transform: none;
-
-    box-shadow: none;
-}
-
-
-/* =========================================================
-   LOADER
-   ========================================================= */
-
-.loader {
-    display: inline-block;
-
-    width: 17px;
-    height: 17px;
-
-    margin-left: 8px;
-
-    vertical-align: middle;
-
-    border: 2px solid
-        rgba(255, 255, 255, 0.35);
-
-    border-top-color: #ffffff;
-
-    border-radius: 50%;
-
-    animation:
-        spin 0.75s linear infinite;
-}
-
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-
-/* =========================================================
-   PROGRESS
-   ========================================================= */
-
-.progress-bar {
-    width: 100%;
-
-    height: 9px;
-
-    overflow: hidden;
-
-    border-radius: 999px;
-
-    background:
-        rgba(51, 65, 85, 0.75);
-}
-
-
-.progress-fill {
-    height: 100%;
-
-    border-radius: inherit;
-
-    background:
-        linear-gradient(
-            90deg,
-            #6366f1,
-            #a855f7
-        );
-
-    transition:
-        width 0.35s ease;
-}
-
-
-.generation-status {
-    display: flex;
-
-    justify-content: space-between;
-
-    gap: 20px;
-
-    margin-top: 13px;
-
-    color: #64748b;
-
-    font-size: 12px;
-}
-
-
-.generation-status strong {
-    color: #cbd5e1;
-}
-
-
-/* =========================================================
-   GENERATED VOICES
-   ========================================================= */
-
-#voiceList {
-    display: flex;
-
     flex-direction: column;
 
-    gap: 13px;
+    gap: 4px;
 }
 
+.primary-btn,
+.merge-btn {
+    min-height: 52px;
 
-.voice-card {
-    padding: 17px;
-
-    border-radius: 13px;
-
-    border: 1px solid
-        rgba(148, 163, 184, 0.12);
-
-    background:
-        rgba(2, 6, 23, 0.45);
-
-    transition:
-        border-color 0.2s,
-        background 0.2s;
-}
-
-
-.voice-card:hover {
-    border-color:
-        rgba(99, 102, 241, 0.3);
-
-    background:
-        rgba(15, 23, 42, 0.75);
-}
-
-
-.voice-card-header {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 15px;
-
-    margin-bottom: 13px;
-}
-
-
-.voice-card-header h3 {
     font-size: 15px;
-
-    font-weight: 700;
 }
 
-
-.voice-card-header span {
-    display: block;
-
-    margin-top: 2px;
-
-    color: #64748b;
-
-    font-size: 11px;
+.audio-part {
+    padding: 13px;
 }
 
-
-.voice-status {
-    color: #4ade80 !important;
-
-    font-size: 12px !important;
-
-    font-weight: 600;
+.audio-part audio {
+    height: 40px;
 }
-
-
-.voice-card audio {
-    display: block;
-
-    width: 100%;
-
-    height: 42px;
-
-    margin-bottom: 13px;
-}
-
-
-.voice-actions {
-    display: flex;
-
-    justify-content: flex-end;
-}
-
-
-/* =========================================================
-   DOWNLOAD BUTTON
-   ========================================================= */
 
 .download-btn {
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    min-height: 38px;
-
-    padding: 0 15px;
-
-    border: 1px solid
-        rgba(99, 102, 241, 0.3);
-
-    border-radius: 9px;
-
-    background:
-        rgba(79, 70, 229, 0.1);
-
-    color: #a5b4fc;
-
-    text-decoration: none;
-
-    font-size: 12px;
-
-    font-weight: 650;
-
-    cursor: pointer;
-
-    transition:
-        background 0.2s,
-        border-color 0.2s,
-        transform 0.2s;
-}
-
-
-.download-btn:hover {
-    background:
-        rgba(79, 70, 229, 0.2);
-
-    border-color:
-        rgba(99, 102, 241, 0.55);
-
-    transform: translateY(-1px);
-}
-
-
-/* =========================================================
-   MERGE SECTION
-   ========================================================= */
-
-.merge-section {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 20px;
-
-    margin-top: 22px;
-
-    padding-top: 22px;
-
-    border-top: 1px solid
-        rgba(148, 163, 184, 0.1);
-}
-
-
-.merge-info h3 {
-    font-size: 16px;
-
-    margin-bottom: 3px;
-}
-
-
-.merge-info p {
-    color: #64748b;
-
-    font-size: 12px;
-}
-
-
-.merge-btn {
-    min-height: 42px;
-
-    padding: 0 18px;
-
-    border: 1px solid
-        rgba(34, 197, 94, 0.3);
-
-    border-radius: 10px;
-
-    background:
-        rgba(34, 197, 94, 0.08);
-
-    color: #86efac;
-
-    font-weight: 650;
-
-    cursor: pointer;
-
-    white-space: nowrap;
-
-    transition:
-        background 0.2s,
-        transform 0.2s;
-}
-
-
-.merge-btn:hover {
-    background:
-        rgba(34, 197, 94, 0.15);
-
-    transform: translateY(-1px);
-}
-
-
-.merge-btn:disabled {
-    opacity: 0.5;
-
-    cursor: not-allowed;
-
-    transform: none;
-}
-
-
-/* =========================================================
-   MERGED AUDIO
-   ========================================================= */
-
-.merged-audio {
-    margin-top: 20px;
-
-    padding: 20px;
-
-    border-radius: 13px;
-
-    border: 1px solid
-        rgba(34, 197, 94, 0.15);
-
-    background:
-        rgba(20, 83, 45, 0.08);
-}
-
-
-.merged-audio h3 {
-    margin-bottom: 13px;
-
-    font-size: 16px;
-}
-
-
-.merged-audio audio {
-    display: block;
-
     width: 100%;
-
-    margin-bottom: 14px;
 }
-
-
-/* =========================================================
-   ERROR
-   ========================================================= */
-
-.error-message {
-    margin: 15px 0;
-
-    padding: 13px 15px;
-
-    border: 1px solid
-        rgba(239, 68, 68, 0.3);
-
-    border-radius: 10px;
-
-    background:
-        rgba(127, 29, 29, 0.15);
-
-    color: #fca5a5;
-
-    font-size: 13px;
-}
-
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-footer {
-    text-align: center;
-
-    margin-top: 30px;
-
-    color: #475569;
-
-    font-size: 12px;
-}
-
-
-/* =========================================================
-   HIDDEN
-   ========================================================= */
-
-.hidden {
-    display: none !important;
-}
-
-
-/* =========================================================
-   RESPONSIVE — TABLET
-   ========================================================= */
-
-@media (max-width: 768px) {
-
-    .app-container {
-        padding:
-            20px 14px 45px;
-    }
-
-
-    .app-header {
-        align-items: flex-start;
-
-        flex-direction: column;
-
-        margin-bottom: 20px;
-    }
-
-
-    .app-header h1 {
-        font-size: 27px;
-    }
-
-
-    .card {
-        padding: 19px;
-
-        border-radius: 15px;
-    }
-
-
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-
-
-    textarea {
-        min-height: 260px;
-    }
-
-
-    .section-title {
-        flex-direction: column;
-
-        gap: 8px;
-    }
-
-
-    .character-counter {
-        align-self: flex-start;
-    }
-
-
-    .merge-section {
-        align-items: stretch;
-
-        flex-direction: column;
-    }
-
-
-    .merge-btn {
-        width: 100%;
-    }
 
 }
 
+/* =========================================
+VERY SMALL PHONES
+========================================= */
 
-/* =========================================================
-   RESPONSIVE — MOBILE
-   ========================================================= */
+@media (max-width: 360px) {
 
-@media (max-width: 480px) {
-
-    .app-container {
-        padding:
-            16px 10px 35px;
-    }
-
-
-    .app-header h1 {
-        font-size: 24px;
-    }
-
-
-    .app-header p {
-        font-size: 12px;
-    }
-
-
-    .card {
-        padding: 16px;
-
-        margin-bottom: 14px;
-    }
-
-
-    .section-title h2 {
-        font-size: 17px;
-    }
-
-
-    .section-title p {
-        font-size: 12px;
-    }
-
-
-    .api-key-input {
-        height: 43px;
-
-        font-size: 13px;
-    }
-
-
-    .toggle-key-btn {
-        min-width: 62px;
-
-        font-size: 12px;
-    }
-
-
-    select {
-        height: 43px;
-    }
-
-
-    textarea {
-        min-height: 230px;
-
-        padding: 13px;
-
-        font-size: 14px;
-    }
-
-
-    .text-info {
-        align-items: flex-start;
-
-        flex-direction: column;
-
-        gap: 4px;
-    }
-
-
-    .generate-btn {
-        width: 100%;
-
-        min-width: 0;
-
-        min-height: 50px;
-    }
-
-
-    .generation-status {
-        align-items: flex-start;
-
-        flex-direction: column;
-
-        gap: 6px;
-    }
-
-
-    .voice-card {
-        padding: 14px;
-    }
-
-
-    .voice-card-header {
-        align-items: flex-start;
-    }
-
-
-    .voice-card audio {
-        height: 40px;
-    }
-
-
-    .voice-actions {
-        justify-content: stretch;
-    }
-
-
-    .download-btn {
-        width: 100%;
-    }
-
+.header h1 {
+    font-size: 24px;
 }
 
+.card {
+    padding: 13px;
+}
 
-/* =========================================================
-   REDUCED MOTION
-   ========================================================= */
+.section-title h2 {
+    font-size: 16px;
+}
 
-@media (prefers-reduced-motion: reduce) {
+.api-key-row {
+    flex-wrap: wrap;
+}
 
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-
-        animation-duration: 0.01ms !important;
-
-        animation-iteration-count: 1 !important;
-
-        transition-duration: 0.01ms !important;
-    }
+.api-key-row input {
+    width: calc(100% - 100px);
+}
 
 }
